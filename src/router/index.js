@@ -1,0 +1,540 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+
+Vue.use(Router)
+
+/* Layout */
+import Layout from '@/layout/index.vue'
+
+/* 路由模块 */
+// import test from './modules/test';
+/**
+ * Note: sub-menu only appear when route children.length >= 1
+ * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
+ *
+ * hidden: true                   当设置 true 的时候该路由不会再侧边栏出现 如401，login等页面，或者如一些编辑页面(默认 false)
+ * alwaysShow: true               设置true，一直显示根路由
+ *                                路由下面的children声明的路由大于1个时，自动回变成嵌套模式-组件页面
+ *                                只有一个时，会将那个子路由当做跟路由显示在侧边栏-如引导页面
+ * redirect: noRedirect           当设置 noRedirect 的时候该路由在面包屑导航中不可被点击， 'xx'重定向地址，在面包屑中点击会重定向去的地址
+ * name:'router-name'             设置路由的名字，一定要填写不然使用<keep-alive>会出现各种问题
+ * meta : {
+    title: 'title'               设置该路由在侧边栏和面包屑中展示的名字
+    icon: 'svg-name'             设置该路由的图标
+    noCache: true                设置为true，不会被 <keep-alive> 缓存（默认false）  【需要页面填写name和路由的name一致】
+    affix: true                  设置为true, 标签会被固定在tags-view
+    breadcrumb: false            如果设置为false，则不会在breadcrumb面包屑中展示(默认 true)
+    activeMenu: '/example/list'  如果设置了path，侧边栏高亮就是你设置的
+
+  }
+ */
+
+import product from './modules/product'
+import resources from './modules/resources'
+import support from './modules/support'
+import applications from './modules/applications'
+import news from './modules/news'
+import about from './modules/about'
+import contact from './modules/contact'
+import citations from './modules/citations'
+
+import developer from './modules/developer'
+import supplyDemand from './modules/supplyDemand'
+import demand from './modules/demand'
+import productDetail from './modules/productDetail'
+import robot from '@/router/modules/robot'
+import news2 from '@/router/modules/news2'
+
+// 常量路由
+export const constantRoutes = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+  // {
+  //   path: '/login',
+  //   component: () => import('@/views/front/Login'),
+  //   hidden: true
+  // },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404'),
+    hidden: true
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/error-page/401'),
+    hidden: true
+  },
+  {
+    path: '/',
+    redirect: '/first',
+    component: () => import('@/views/login/first'),
+    hidden: true
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: { title: '首页', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/bigScreen',
+    component: () => import('@/views/bigScreen/index')
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/mall',
+    children: [
+      {
+        path: 'mall',
+        component: () => import('@/views/mall/mall'),
+        name: 'mall',
+        meta: { title: '工业Mall', icon: '' }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/softwareList',
+    children: [
+      {
+        path: '/softwareList',
+        component: () => import('@/views/mall/softwareList'),
+        name: 'softwareList',
+        meta: { title: '商品列表', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/devPlatform',
+    children: [
+      {
+        path: '/devPlatform',
+        component: () => import('@/views/devPlatform/devPlatform'),
+        name: 'devPlatform',
+        meta: { title: '开发者平台', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/spinning',
+    children: [
+      {
+        path: 'spinning',
+        component: () => import('@/views/solution/spinning'),
+        name: 'spinning',
+        meta: { title: '纺织行业', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/garment',
+    children: [
+      {
+        path: 'garment',
+        component: () => import('@/views/solution/garment'),
+        name: 'garment',
+        meta: { title: '服装加工', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/machining',
+    children: [
+      {
+        path: 'machining',
+        component: () => import('@/views/solution/machining'),
+        name: 'machining',
+        meta: { title: '机加工', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/pump',
+    children: [
+      {
+        path: 'pump',
+        component: () => import('@/views/solution/pump'),
+        name: 'pump',
+        meta: { title: '水泵', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/forming',
+    children: [
+      {
+        path: 'forming',
+        component: () => import('@/views/solution/forming'),
+        name: 'forming',
+        meta: { title: '成型', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/valve',
+    children: [
+      {
+        path: 'valve',
+        component: () => import('@/views/solution/valve'),
+        name: 'valve',
+        meta: { title: '阀门制造', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/equipment',
+    children: [
+      {
+        path: 'equipment',
+        component: () => import('@/views/solution/equipment'),
+        name: 'equipment',
+        meta: { title: '装备制造', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/electrical',
+    children: [
+      {
+        path: 'electrical',
+        component: () => import('@/views/solution/electrical'),
+        name: 'electrical',
+        meta: { title: '电器', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/permanent',
+    children: [
+      {
+        path: 'permanent',
+        component: () => import('@/views/solution/permanent'),
+        name: 'permanent',
+        meta: { title: '稀土永磁', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/photovoltaic',
+    children: [
+      {
+        path: 'photovoltaic',
+        component: () => import('@/views/solution/photovoltaic'),
+        name: 'photovoltaic',
+        meta: { title: '光伏', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/autoParts',
+    children: [
+      {
+        path: 'autoParts',
+        component: () => import('@/views/solution/autoParts'),
+        name: 'autoParts',
+        meta: { title: '汽车配件', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/cement',
+    children: [
+      {
+        path: 'cement',
+        component: () => import('@/views/solution/cement'),
+        name: 'cement',
+        meta: { title: '水泥', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/smart_investment',
+    children: [
+      {
+        path: 'smart_investment',
+        component: () => import('@/views/government/smart_investment'),
+        name: 'smart_investment',
+        meta: { title: '智慧招商', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/safety_management',
+    children: [
+      {
+        path: 'safety_management',
+        component: () => import('@/views/government/safety_management'),
+        name: 'safety_management',
+        meta: { title: '安监管理', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/innovation_develop',
+    children: [
+      {
+        path: 'innovation_develop',
+        component: () => import('@/views/government/innovation_develop'),
+        name: 'innovation_develop',
+        meta: { title: '产业创新发展中心', icon: '', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/supply_chain',
+    children: [
+      {
+        path: 'supply_chain',
+        component: () => import('@/views/government/supply_chain'),
+        name: 'supply_chain',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 兴业-供需对接 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/supply_demand_docking',
+    children: [
+      {
+        path: 'supply_demand_docking',
+        component: () => import('@/views/government/supply_demand_docking'),
+        name: 'supply_demand_docking',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 兴业-产业协同平台 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/industrial_synergy',
+    children: [
+      {
+        path: 'industrial_synergy',
+        component: () => import('@/views/government/industrial_synergy'),
+        name: 'industrial_synergy',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 善政-环保监控 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/environmental_monitoring',
+    children: [
+      {
+        path: 'environmental_monitoring',
+        component: () => import('@/views/government/environmental_monitoring'),
+        name: 'environmental_monitoring',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 善政-企业黄页 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/yellow_page',
+    children: [
+      {
+        path: 'yellow_page',
+        component: () => import('@/views/government/yellow_page'),
+        name: 'yellow_page',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 善政-政策资讯 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/policy_advice',
+    children: [
+      {
+        path: 'policy_advice',
+        component: () => import('@/views/government/policy_advice'),
+        name: 'policy_advice',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 善政-政企互动 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/government_interaction',
+    children: [
+      {
+        path: 'government_interaction',
+        component: () => import('@/views/government/government_interaction'),
+        name: 'government_interaction',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 善政-项目申报 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/project_application',
+    children: [
+      {
+        path: 'project_application',
+        component: () => import('@/views/government/project_application'),
+        name: 'project_application',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 善政-经济态势 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/economic_situation',
+    children: [
+      {
+        path: 'economic_situation',
+        component: () => import('@/views/government/economic_situation'),
+        name: 'economic_situation',
+        meta: { title: '供应链金融平台', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 关于我们 */
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/aboutUs',
+    children: [
+      {
+        path: '/aboutUs',
+        component: () => import('@/views/aboutUs/aboutUs'),
+        name: 'aboutUs',
+        meta: { title: '关于我们', icon: '', affix: true }
+      }
+    ]
+  },
+  /* 登录 */
+  {
+    path: '/login',
+    component: () => import('@/views/login/login'),
+    hidden: true
+  },
+  /* 注册 */
+  {
+    path: '/register',
+    component: () => import('@/views/login/register'),
+    hidden: true
+  },
+  /* 企业测登录页面 */
+  {
+    path: '/login_enterprise',
+    component: () => import('@/views/login/login_enterprise'),
+    name: 'login_enterprise',
+    hidden: true
+  },
+  /* 政府测登录页面 */
+  {
+    path: '/login_gov',
+    component: () => import('@/views/login/login_gov'),
+    name: 'login_gov',
+    hidden: true
+  },
+  /* first */
+  {
+    path: '/first',
+    component: () => import('@/views/login/first'),
+    hidden: true
+  },
+  /* product,
+  resources,
+  support,
+  applications,
+  news,
+  about,
+  contact,
+  citations,*/
+
+  developer,
+  supplyDemand,
+  demand,
+  productDetail,
+  robot,
+  news2,
+
+  /** ** 开发使用 最终以接口返回 ***/
+  // test
+  { path: '*', redirect: '/404', hidden: true } // 开发使用
+]
+
+const createRouter = () =>
+  new Router({
+    mode: 'hash', // 'history'服务器需要配置
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
+
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
+export default router

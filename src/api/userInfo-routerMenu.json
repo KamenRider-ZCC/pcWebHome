@@ -1,0 +1,160 @@
+{
+  "code": 200,
+  "msg": "成功",
+  "data": {
+    "userinfo": {
+      "userinfoNo": "No.66",
+      "name": "李三",
+      "company": "服务有限公司",
+      "branch": "总经办",
+      "job": "总经理",
+      "fileName": null
+    },
+    "userButton": [],
+    "userRouterMenu": [
+      {
+        "redirect": "/devctest/tinymce",
+        "path": "/devtest",
+        "component": "Layout",
+        "hidden": 0,
+        "name": "",
+        "menuId": 322,
+        "parentId": 0,
+        "meta": {
+          "noCache": true,
+          "breadcrumb": true,
+          "activeMenu": null,
+          "affix": false,
+          "icon": "form",
+          "title": "富文本编辑器"
+        },
+        "children": [
+          {
+            "redirect": "",
+            "path": "tinymce",
+            "component": "/devtest/tinymce",
+            "hidden": false,
+            "name": "Ttinymce",
+            "children": [],
+            "meta": {
+              "noCache": true,
+              "breadcrumb": true,
+              "activeMenu": null,
+              "affix": false,
+              "icon": "form",
+              "title": "tinymce-vue"
+            }
+          },
+          {
+            "redirect": "",
+            "path": "x",
+            "component": "/devtest/x",
+            "hidden": false,
+            "name": "X",
+            "meta": {
+              "noCache": true,
+              "breadcrumb": true,
+              "activeMenu": null,
+              "affix": false,
+              "icon": "documentation",
+              "title": "xxxxxx"
+            }
+          }
+        ]
+      },
+      {
+        "redirect": "",
+        "path": "/system-setting",
+        "component": "Layout",
+        "hidden": false,
+        "name": "",
+        "meta": {
+          "noCache": true,
+          "breadcrumb": true,
+          "activeMenu": null,
+          "affix": false,
+          "icon": "component",
+          "title": "管理系统设置"
+        },
+        "children": [
+          {
+            "redirect": "",
+            "path": "auth",
+            "component": "/system-setting/auth-staff/auth/authority-list",
+            "hidden": false,
+            "name": "Auth",
+            "meta": {
+              "noCache": true,
+              "breadcrumb": true,
+              "activeMenu": null,
+              "affix": false,
+              "icon": "auth",
+              "title": "身份权限"
+            }
+          },
+          {
+            "redirect": "",
+            "path": "authadd",
+            "component": "/system-setting/auth-staff/auth/authority-add",
+            "hidden": true,
+            "name": "AuthAdd",
+            "meta": {
+              "noCache": true,
+              "breadcrumb": true,
+              "activeMenu": null,
+              "affix": false,
+              "icon": "auth",
+              "title": "添加权限"
+            }
+          },
+          {
+            "redirect": "",
+            "path": "stafflist",
+            "component": "/system-setting/auth-staff/staff/staff-list",
+            "hidden": false,
+            "name": "StaffList",
+            "meta": {
+              "noCache": true,
+              "breadcrumb": true,
+              "activeMenu": null,
+              "affix": false,
+              "icon": "staff",
+              "title": "员工设置"
+            },
+            "children": []
+          },
+          {
+            "redirect": "",
+            "path": "staffadd",
+            "component": "/system-setting/auth-staff/staff/staff-add",
+            "hidden": true,
+            "name": "StaffAdd",
+            "meta": {
+              "noCache": true,
+              "breadcrumb": true,
+              "activeMenu": null,
+              "affix": false,
+              "icon": "staff",
+              "title": "新建员工"
+            }
+          },
+          {
+            "redirect": "",
+            "path": "menu",
+            "component": "/system-setting/sys-menu/menu-list",
+            "hidden": false,
+            "name": "Menu",
+            "meta": {
+              "noCache": true,
+              "breadcrumb": true,
+              "activeMenu": null,
+              "affix": false,
+              "icon": "menu",
+              "title": "系统菜单"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

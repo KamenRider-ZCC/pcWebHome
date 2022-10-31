@@ -1,0 +1,575 @@
+<template>
+  <div class="dashboard-container">
+    <el-row type="flex" justify="center">
+      <div class="mainBody" style="margin: 32px 0">
+        <el-row type="flex" align="middle" style="position: relative">
+          <img src="@/assets/images/mall_log.png" class="mall_logo">
+          <el-input
+            v-model="input1"
+            placeholder="请输入搜索关键词"
+            class="searchInput"
+            size="large"
+            style="width: 540px;margin-left: 130px"
+          >
+            <el-button slot="append" class="searchBtn" @click="goSoftList">搜索</el-button>
+          </el-input>
+          <span style="margin: 0 20px; font-size: 18px;">
+            或
+          </span>
+          <el-button class="needBtn" @click="goRobot">发布定制需求</el-button>
+          <div style="position: absolute; top: 56px; left: 322px">
+            <span class="searchTip">数据</span>
+            <span class="searchTip">自动化</span>
+            <span class="searchTip">智能管理</span>
+            <span class="searchTip">安全服务</span>
+            <span class="searchTip">自动化部署</span>
+          </div>
+        </el-row>
+      </div>
+    </el-row>
+    <el-row type="flex" justify="center">
+      <div class="mainBody">
+        <el-row type="flex">
+          <ul class="mall_menu">
+            <li class="menu_li" style="background-color: #D80E19; color: #fff">
+              应用分类
+            </li>
+            <li class="menu_li" @click="goSoftList">
+              协同营销
+              <svg-icon icon-class="menu_arrow" style="position: absolute; top: 18px; right: 16px;"/>
+            </li>
+            <li class="menu_li" @click="goSoftList">
+              智能设计
+              <svg-icon icon-class="menu_arrow" style="position: absolute; top: 18px; right: 16px;"/>
+            </li>
+            <li class="menu_li" @click="goSoftList">
+              智能制造
+              <svg-icon icon-class="menu_arrow" style="position: absolute; top: 18px; right: 16px;"/>
+            </li>
+            <li class="menu_li" @click="goSoftList">
+              IOT
+              <svg-icon icon-class="menu_arrow" style="position: absolute; top: 18px; right: 16px;"/>
+            </li>
+            <li class="menu_li" @click="goSoftList">
+              智能运维
+              <svg-icon icon-class="menu_arrow" style="position: absolute; top: 18px; right: 16px;"/>
+            </li>
+            <li class="menu_li" @click="goSoftList">
+              数据分析
+              <svg-icon icon-class="menu_arrow" style="position: absolute; top: 18px; right: 16px;"/>
+            </li>
+          </ul>
+          <el-carousel :interval="5000" arrow="never" height="392px" style="width: 980px">
+            <el-carousel-item key="1">
+              <img src="@/assets/images/mall_banner1.png" class="mall_banner">
+            </el-carousel-item>
+            <el-carousel-item key="2">
+              <img src="@/assets/images/mall_banner2.png" class="mall_banner">
+            </el-carousel-item>
+            <el-carousel-item key="3">
+              <img src="@/assets/images/mall_banner3.png" class="mall_banner">
+            </el-carousel-item>
+          </el-carousel>
+        </el-row>
+      </div>
+    </el-row>
+    <el-row type="flex" justify="center" style="margin-top: 64px">
+      <div class="mainBody">
+        <span class="mall_title" style="position: absolute; top: -6px;">
+          精品推荐
+        </span>
+        <span class="mall_more" style="position: absolute; top: 12px; right: 0; cursor: pointer; z-index: 99999" @click="goSoftList">
+          更多
+          <svg-icon icon-class="more" style="height: 18px; width: 18px; vertical-align: -3px" />
+        </span>
+        <el-tabs v-model="activeName">
+          <el-tab-pane label="生产制造" name="1">
+            <el-row type="flex">
+              <img src="@/assets/images/mall_recommend.png" style="cursor: pointer;">
+              <div style="height:280px; width: calc(100% - 282px);">
+                <el-row>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-right: 1px solid #E8E8E8;border-bottom: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">大唐融合云MES</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          DTiip -MES平台为机加工行业专门定制功能，企业可根据自身的实际情况来定制功能模块，它包含了ERP接口、设备物联、生产计划、生产执行、质量管理，统计分析等模块...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-bottom: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">IOT物联云</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          提供设备监控，设备台账，设备点检、保养、维修等上报和记录功能。设备监控即通过网页WEB端、工厂/车间/机台看板等实时展示设备当前状态及关键参数，报警信息...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-right: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">3D涡扇飞机发动机</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          作为飞机的心脏，不仅是飞机飞行的动力，也是促进航空业发展的重要推动力。此款高精度飞机发动机3D模型，支持数十种配色、近10种材质...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">Simright Simulator系统</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          Simulator是一款通过Web浏览器在线使用的结构仿真分析软件，通过计算机仿真帮助用户评估产品的结构性能， 降低物理测试成本，更迅速地做出更明智的设...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-row>
+          </el-tab-pane>
+          <el-tab-pane label="研发设计" name="2">
+            <el-row type="flex">
+              <img src="@/assets/images/mall_recommend.png" style="cursor: pointer;">
+              <div style="height:280px; width: calc(100% - 282px);">
+                <el-row>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-right: 1px solid #E8E8E8;border-bottom: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">大唐融合云MES</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          DTiip -MES平台为机加工行业专门定制功能，企业可根据自身的实际情况来定制功能模块，它包含了ERP接口、设备物联、生产计划、生产执行、质量管理，统计分析等模块...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-bottom: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">IOT物联云</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          提供设备监控，设备台账，设备点检、保养、维修等上报和记录功能。设备监控即通过网页WEB端、工厂/车间/机台看板等实时展示设备当前状态及关键参数，报警信息...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-right: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">3D涡扇飞机发动机</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          作为飞机的心脏，不仅是飞机飞行的动力，也是促进航空业发展的重要推动力。此款高精度飞机发动机3D模型，支持数十种配色、近10种材质...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">Simright Simulator系统</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          Simulator是一款通过Web浏览器在线使用的结构仿真分析软件，通过计算机仿真帮助用户评估产品的结构性能， 降低物理测试成本，更迅速地做出更明智的设...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-row>
+          </el-tab-pane>
+          <el-tab-pane label="供应链" name="3">
+            <el-row type="flex">
+              <img src="@/assets/images/mall_recommend.png" style="cursor: pointer;">
+              <div style="height:280px; width: calc(100% - 282px);">
+                <el-row>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-right: 1px solid #E8E8E8;border-bottom: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">大唐融合云MES</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          DTiip -MES平台为机加工行业专门定制功能，企业可根据自身的实际情况来定制功能模块，它包含了ERP接口、设备物联、生产计划、生产执行、质量管理，统计分析等模块...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-bottom: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">IOT物联云</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          提供设备监控，设备台账，设备点检、保养、维修等上报和记录功能。设备监控即通过网页WEB端、工厂/车间/机台看板等实时展示设备当前状态及关键参数，报警信息...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-right: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">3D涡扇飞机发动机</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          作为飞机的心脏，不仅是飞机飞行的动力，也是促进航空业发展的重要推动力。此款高精度飞机发动机3D模型，支持数十种配色、近10种材质...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">Simright Simulator系统</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          Simulator是一款通过Web浏览器在线使用的结构仿真分析软件，通过计算机仿真帮助用户评估产品的结构性能， 降低物理测试成本，更迅速地做出更明智的设...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-row>
+          </el-tab-pane>
+          <el-tab-pane label="3D模型" name="4">
+            <el-row type="flex">
+              <img src="@/assets/images/mall_recommend.png" style="cursor: pointer;">
+              <div style="height:280px; width: calc(100% - 282px);">
+                <el-row>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-right: 1px solid #E8E8E8;border-bottom: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">大唐融合云MES</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          DTiip -MES平台为机加工行业专门定制功能，企业可根据自身的实际情况来定制功能模块，它包含了ERP接口、设备物联、生产计划、生产执行、质量管理，统计分析等模块...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-bottom: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">IOT物联云</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          提供设备监控，设备台账，设备点检、保养、维修等上报和记录功能。设备监控即通过网页WEB端、工厂/车间/机台看板等实时展示设备当前状态及关键参数，报警信息...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px;border-right: 1px solid #E8E8E8">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">3D涡扇飞机发动机</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          作为飞机的心脏，不仅是飞机飞行的动力，也是促进航空业发展的重要推动力。此款高精度飞机发动机3D模型，支持数十种配色、近10种材质...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div style="padding: 12px 32px;height: 140px">
+                      <el-row type="flex" align="middle">
+                        <span class="tab_title">Simright Simulator系统</span>
+                        <div style="display: flex; flex-grow: 1"></div>
+                        <el-button type="tab_btn" @click="goSoftList">立即购买</el-button>
+                      </el-row>
+                      <el-row style="margin-top: 16px">
+                        <span class="tab_text">
+                          Simulator是一款通过Web浏览器在线使用的结构仿真分析软件，通过计算机仿真帮助用户评估产品的结构性能， 降低物理测试成本，更迅速地做出更明智的设...
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-row>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
+    </el-row>
+    <el-row type="flex" justify="center" style="margin-top: 64px">
+      <div class="mainBody">
+        <img src="@/assets/images/mall_middle_banner.png" class="middle_banner">
+      </div>
+    </el-row>
+    <el-row type="flex" justify="center" style="margin-top: 64px;margin-bottom: 100px">
+      <div class="mainBody">
+        <el-row type="flex" style="align-items: baseline;border-bottom: 2px solid #dfe4ed;padding-bottom: 8px">
+          <span class="mall_title">
+            软件列表
+          </span>
+          <div style="display: flex; flex-grow: 1"></div>
+          <span class="mall_more" style="cursor:pointer;" @click="goSoftList">
+            更多
+            <svg-icon icon-class="more" style="height: 18px; width: 18px; vertical-align: -3px"/>
+          </span>
+        </el-row>
+        <el-row v-for="(item, index) in cardList" :key="index" style="padding: 32px 0 0">
+          <el-card shadow="always" :body-style="{ padding: '30px 46px' }" style="position: relative">
+            <div class="triangle_bottomRight"></div>
+            <el-row type="flex" align="middle">
+              <el-col :span="16">
+                <el-row>
+                  <span class="mall_card_title">{{ item.title }}</span>
+                </el-row>
+                <el-row style="margin-top: 38px">
+                  <span class="mall_card_text">
+                    {{ item.introduction }}
+                  </span>
+                </el-row>
+                <el-row type="flex" justify="space-between" style="margin-top: 32px;width: 450px">
+                  <div style="display: flex; align-items: center">
+                    <img src="@/assets/images/mall_card_arrow.png">
+                    <span style="margin-left: 8px;color: #666666">方便使用</span>
+                  </div>
+                  <div style="display: flex; align-items: center">
+                    <img src="@/assets/images/mall_card_arrow.png">
+                    <span style="margin-left: 8px;color: #666666">并发数高</span>
+                  </div>
+                  <div style="display: flex; align-items: center">
+                    <img src="@/assets/images/mall_card_arrow.png">
+                    <span style="margin-left: 8px;color: #666666">响应快速</span>
+                  </div>
+                </el-row>
+                <el-row style="margin-top: 32px">
+                  <span style="font-size: 16px; color: #D9111E">
+                    工业类软件
+                  </span>
+                </el-row>
+              </el-col>
+              <el-col :span="8" style="display: flex; justify-content: center">
+                <img :src="item.cover" class="mall_card_img" style="margin-left: 46px">
+              </el-col>
+            </el-row>
+          </el-card>
+        </el-row>
+      </div>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import * as api from '@/api/supplyDemand'
+
+export default {
+  name: 'mall',
+  data() {
+    return {
+      input1: '',
+      activeName: '1',
+      cardList: []
+    }
+  },
+  mounted() {
+    this.getPage()
+  },
+  methods: {
+    goRobot() {
+      this.$router.push({ path: '/robot' })
+    },
+    async getPage() {
+      const res = await api.getSoftPage({
+        page: 1,
+        limit: 2,
+        forum: 8,
+        artType: '' })
+      this.cardList = res.data.data
+    },
+    goSoftList() {
+      this.$router.push({ path: '/softwareList' })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .dashboard {
+    &-container {
+      .mainBody {
+        position: relative;
+        width: 1200px;
+      }
+      .mall_logo {
+        width: 191px;
+        display: block;
+      }
+      ::v-deep .searchInput .el-input__inner {
+        border-radius: 0;
+        border-color: #D80E19;
+        border-width: 2px;
+      }
+      ::v-deep .searchInput .el-input-group__append {
+        border-radius: 0;
+        border-color: #D80E19;
+        border-width: 2px;
+      }
+      .searchBtn {
+        width: 120px;
+        font-size: 18px;
+        height: 38px;
+        color: #fff;
+        background-color: #D80E19;
+        border-radius: 0;
+      }
+      .needBtn {
+        width: 160px;
+        font-size: 18px;
+        height: 42px;
+        color: #fff;
+        background-color: #D80E19;
+        border-radius: 0;
+      }
+      .searchTip {
+        color: #666666;
+        font-size: 14px;
+        margin: 0 8px;
+      }
+      .mall_menu {
+        list-style-type: none;
+        width: 220px;
+        padding-left: 0;
+        text-align: center;
+        font-size: 18px;
+        margin: 0;
+        .menu_li {
+          font-weight: 600;
+          position: relative;
+          height: 56px;
+          line-height: 56px;
+          &:not(:first-child) {
+            cursor: pointer;
+            &:hover {
+              background-color: rgba(166, 109, 112, 0.06)
+            }
+            &:nth-child(odd){
+              background: rgba(166, 109, 112, 0.06)
+            }
+          }
+        }
+      }
+      .mall_banner {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      ::v-deep .el-carousel__button {
+        background-color: #d3dce6;
+      }
+      ::v-deep .el-tabs--top .el-tabs__item.is-top:nth-child(2) {
+        padding-left: 220px;
+      }
+      ::v-deep .el-tabs__item {
+        font-size: 18px;
+      }
+      ::v-deep .el-tabs__item.is-active {
+        font-weight: bold;
+        color: #000;
+      }
+      ::v-deep .el-tabs__active-bar {
+        background-color: #D80E19;
+      }
+      .mall_title {
+        font-size: 30px;
+      }
+      .tab_title {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .tab_text {
+        font-size: 14px;
+        color: #929292;
+      }
+      ::v-deep .el-button--tab_btn {
+        background-color: #D80E19;
+        border-color: #D80E19;
+        color: #fff;
+      }
+      .middle_banner {
+        width: 100%;
+        display: block;
+      }
+      .triangle_bottomRight {
+        width: 0;
+        height: 0;
+        border-bottom: 30px solid #D80E19;
+        border-left: 30px solid transparent;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .mall_card_title {
+        font-size: 24px;
+      }
+      .mall_card_text {
+        font-size: 16px;
+        color: #666666;
+        line-height: 28px;
+      }
+      .mall_card_img {
+        width: 280px;
+        height: 163px;
+        display: block;
+        box-shadow: 10px 10px 10px 0 rgba(0,0,0,.3);
+      }
+    }
+  }
+</style>

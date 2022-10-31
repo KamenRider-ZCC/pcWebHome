@@ -1,0 +1,788 @@
+<template>
+  <div class="dashboard-container">
+    <el-carousel :interval="5000" arrow="never" height="560px">
+      <el-carousel-item key="1">
+        <img src="@/assets/images/banner1.png" class="carousel_img">
+        <div class="carousel_div">
+          <img src="@/assets/images/banner_logo.png" class="carousel_logo">
+          <p class="banner_h1">大唐融合星级上云企业服务平台</p>
+          <p class="banner_h1">助力企业数字化转型</p>
+          <p class="banner_h2">100+成功案例，2000+各行业设备</p>
+          <el-button
+            size="small"
+            type="myRed"
+            style="width: 165px;height: 46px;font-size: 16px;margin-top: 32px"
+            @click="goSXSY"
+          >
+            点击查看详情
+            <svg-icon icon-class="right_arrow" style="margin-left: 4px" />
+          </el-button>
+        </div>
+      </el-carousel-item>
+      <el-carousel-item key="2">
+        <img src="@/assets/images/banner2.png" class="carousel_img">
+        <div class="carousel_div">
+          <img src="@/assets/images/banner_logo.png" class="carousel_logo">
+          <p class="banner_h1">大唐融合DTiip供需大厅</p>
+          <p class="banner_h2" style="width: 588px;line-height: 36px">依托大唐工业智能化合作伙伴，整合海量供需双方产品/服务资源，匹配企业工业互联网需求，打通产品、解决方案与企业之间的壁垒</p>
+          <el-button
+            size="small"
+            type="myRed"
+            style="width: 165px;height: 46px;font-size: 16px;margin-top: 32px"
+            @click="goFBXQ"
+          >
+            发布需求
+            <svg-icon icon-class="right_arrow" style="margin-left: 4px" />
+          </el-button>
+        </div>
+      </el-carousel-item>
+      <el-carousel-item key="3">
+        <img src="@/assets/images/banner3.png" class="carousel_img">
+        <div class="carousel_div">
+          <img src="@/assets/images/banner_logo.png" class="carousel_logo">
+          <p class="banner_h1">绽放智能之光，畅享技术之美</p>
+          <p class="banner_h1">共同打造大唐DTiip开发者社区</p>
+          <p class="banner_h2">为广大开发者提供认知、交流、实践的一站式社区</p>
+          <el-row type="flex" align="middle" justify="space-between" style="width:90%;margin-top: 56px">
+            <el-button
+              type="text"
+              class="textBtn"
+              style="font-size: 15px"
+              @click="goDevPlatForm('1')"
+            >
+              优质文章
+              <svg-icon icon-class="caret_right" style="vertical-align:initial;height:12px;width:12px;margin-left: 4px" />
+            </el-button>
+            <el-button
+              type="text"
+              class="textBtn"
+              style="font-size: 15px"
+              @click="goDevPlatForm('2')"
+            >
+              关键技术
+              <svg-icon icon-class="caret_right" style="vertical-align:initial;height:12px;width:12px;margin-left: 4px" />
+            </el-button>
+            <el-button
+              type="text"
+              class="textBtn"
+              style="font-size: 15px"
+              @click="goDevPlatForm('3')"
+            >
+              资源工具
+              <svg-icon icon-class="caret_right" style="vertical-align:initial;height:12px;width:12px;margin-left: 4px" />
+            </el-button>
+            <el-button
+              type="text"
+              class="textBtn"
+              style="font-size: 15px"
+              @click="goDevPlatForm('4')"
+            >
+              培训认证
+              <svg-icon icon-class="caret_right" style="vertical-align:initial;height:12px;width:12px;margin-left: 4px" />
+            </el-button>
+          </el-row>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
+    <el-row type="flex" align="middle" style="justify-content: space-evenly;height: 70px">
+      <img src="@/assets/images/tool_left.png" class="tool_img">
+      <img src="@/assets/images/tool_center.png" class="tool_img">
+      <img src="@/assets/images/tool_right.png" class="tool_img">
+    </el-row>
+    <el-row type="flex" align="middle" justify="center" style="margin-top: 100px">
+      <span class="mainTitle">善政·工赋政府</span>
+    </el-row>
+    <el-row type="flex" align="middle" justify="center" style="margin-top: 20px;margin-bottom: 58px" @mouseenter.native="clearShow()">
+      <span class="subTitle">补链强链、精准招商、促进高质量发展</span>
+    </el-row>
+    <el-row type="flex" justify="center" style="margin-bottom: 24px" @mouseenter.native="clearShow()">
+      <div class="listCard card_zhzs">
+        <img src="@/assets/images/zhzs.png" style="display: block; cursor: pointer;" @mouseenter="clearShow();show1 = true">
+        <transition name="el-zoom-in-center">
+          <div v-show="show1" class="white_card" @mouseleave="show1 = false" @click="goPage('smart_investment')">
+            <div style="margin:85px 32px 32px 40px">
+              <p class="cardTitle">智慧招商</p>
+              <p class="cardSubTitle">SMART INVESTMENT</p>
+              <p class="cardText">
+                帮助精准定位潜在客户，提高信息传递效率，提高招商过程透明性和管理效率
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <div class="listCard card_zczx">
+        <img src="@/assets/images/zczx.png" style="display: block; cursor: pointer;" @mouseenter="clearShow();show2 = true">
+        <transition name="el-zoom-in-center">
+          <div v-show="show2" class="white_card" @mouseleave="show2 = false" @click="goPage('policy_advice')">
+            <div style="margin:85px 32px 32px 40px">
+              <p class="cardTitle">政策咨询</p>
+              <p class="cardSubTitle">POLICY ADVICE</p>
+              <p class="cardText">
+                解读最新政策，把握行业动向
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <div class="listCard card_zqhd">
+        <img src="@/assets/images/zqhd.png" style="display: block; cursor: pointer;" @mouseenter="clearShow();show3 = true">
+        <transition name="el-zoom-in-center">
+          <div v-show="show3" class="white_card" @mouseleave="show3 = false" @click="goPage('government_interaction')">
+            <div style="margin:85px 32px 32px 40px">
+              <p class="cardTitle">政企互动</p>
+              <p class="cardSubTitle">THE GOVERNMENT INTERACTION</p>
+              <p class="cardText">
+                建立政企良好沟通渠道，关键信息快速上传下达
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <div class="listCard card_xmsb">
+        <img src="@/assets/images/xmsb.png" style="display: block; cursor: pointer;" @mouseenter="clearShow();show4 = true">
+        <transition name="el-zoom-in-center">
+          <div v-show="show4" class="white_card" @mouseleave="show4 = false" @click="goPage('project_application')">
+            <div style="margin:85px 32px 32px 40px">
+              <p class="cardTitle">项目申报</p>
+              <p class="cardSubTitle">PROJECT APPLICATION</p>
+              <p class="cardText">
+                专家匹配当地政策，一站式申报服务
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </el-row>
+    <el-row type="flex" justify="center" style="margin-bottom: 24px" @mouseenter.native="clearShow()">
+      <div class="listCard card_ajgl">
+        <img src="@/assets/images/ajgl.png" style="display: block; cursor: pointer;" @mouseenter="clearShow();show5 = true">
+        <transition name="el-zoom-in-center">
+          <div v-show="show5" class="white_card" @mouseleave="show5 = false" @click="goPage('safety_management')">
+            <div style="margin:85px 32px 32px 40px">
+              <p class="cardTitle">安监管理</p>
+              <p class="cardSubTitle">SAFETY MANAGEMENT</p>
+              <p class="cardText">
+                实现安全监管部门与被监管企业信息的互联共享和智能关联
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <div class="listCard card_hbjk">
+        <img src="@/assets/images/hbjk.png" style="display: block; cursor: pointer;" @mouseenter="clearShow();show6 = true">
+        <transition name="el-zoom-in-center">
+          <div v-show="show6" class="white_card" @mouseleave="show6 = false" @click="goPage('environmental_monitoring')">
+            <div style="margin:85px 32px 32px 40px">
+              <p class="cardTitle">环保监控</p>
+              <p class="cardSubTitle">ENVIRONMENTAL MONITORING</p>
+              <p class="cardText">
+                采用网格化的环境监控方式，快速感知监测指标，有效提升环境管理和污染监管水平
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <div class="listCard card_bgsc">
+        <img src="@/assets/images/bgsc.png" style="display: block; cursor: pointer;" @mouseenter="clearShow();show7 = true">
+        <transition name="el-zoom-in-center">
+          <div v-show="show7" class="white_card" @mouseleave="show7 = false" @click="goPage('economic_situation')">
+            <div style="margin:85px 32px 32px 40px">
+              <p class="cardTitle">经济态势</p>
+              <p class="cardSubTitle">ECONOMIC SITUATION</p>
+              <p class="cardText">
+                实时查看区域经济态势，高效统筹全局
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <div class="listCard card_jczc">
+        <img src="@/assets/images/jczc.png" style="display: block; cursor: pointer;" @mouseenter="clearShow();show8 = true">
+        <transition name="el-zoom-in-center">
+          <div v-show="show8" class="white_card" @mouseleave="show8 = false" @click="goPage('yellow_page')">
+            <div style="margin:85px 32px 32px 40px">
+              <p class="cardTitle">企业黄页</p>
+              <p class="cardSubTitle">YELLOW PAGE</p>
+              <p class="cardText">
+                汇集区域企业黄页信息，信息开放共享，扶持政策展示
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </el-row>
+    <el-row type="flex" align="middle" justify="center" style="margin-top: 100px" @mouseenter.native="clearShow()">
+      <span class="mainTitle">兴业·工赋产业</span>
+    </el-row>
+    <el-row type="flex" align="middle" justify="center" style="margin-top: 20px;margin-bottom: 58px">
+      <span class="subTitle">创新发展、协同服务、构建产业生态圈</span>
+    </el-row>
+    <el-tabs v-model="activeName">
+      <el-tab-pane label="产业创新发展中心" name="1">
+        <!--<div class="tab1" @click="goPage('innovation_develop')">-->
+        <div class="tab1">
+          <a href="http://140.210.202.134/DH/webgl" target="_blank">
+          <div class="tabDiv">
+            <div style="margin-left:6px;width: 28px; height: 6px;background-color: #D80E19;border-radius: 6px" />
+            <p class="tabTitle" style="margin-top: 42px">
+              产业创新发展中心
+            </p>
+            <p class="tabText" style="width: 476px;margin-top: 48px">联合高校、研究院等学术科研机构，聚焦产业互联网、自主工业软件、工控安全等科创内容的行业创新发展中心。面向地方企业，提供管理/技术咨询、诊断和专业人才培训服务。</p>
+          </div>
+          </a>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="供需对接平台" name="2">
+        <div class="tab2" @click="goPage('supply_demand_docking')">
+          <div class="tabDiv">
+            <div style="margin-left:6px;width: 28px; height: 6px;background-color: #D80E19;border-radius: 6px" />
+            <p class="tabTitle" style="margin-top: 42px">
+              供需对接平台
+            </p>
+            <p class="tabText" style="width: 476px;margin-top: 48px">整合海量供需双方产品/服务资源，建立快速、精准的匹配信息渠道。</p>
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="产业协同平台" name="3">
+        <!--<div class="tab3" @click="goPage('industrial_synergy')">-->
+        <div class="tab3">
+          <a href="https://www.yarnplat.com/web" target="_blank">
+          <div class="tabDiv">
+            <div style="margin-left:6px;width: 28px; height: 6px;background-color: #D80E19;border-radius: 6px" />
+            <p class="tabTitle" style="margin-top: 42px">
+              产业协同平台
+            </p>
+            <p class="tabText" style="width: 476px;margin-top: 48px">助力产业链一体化，聚焦全场景连接，赋能企业数字化，推动产业上下游的互联互通、提质增效，构建良性产业生态圈。</p>
+          </div>
+          </a>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="供应链金融平台" name="4">
+        <div class="tab4"  @click="goPage('supply_chain')">
+          <div class="tabDiv">
+            <div style="margin-left:6px;width: 28px; height: 6px;background-color: #D80E19;border-radius: 6px" />
+            <p class="tabTitle" style="margin-top: 42px">
+              供应链金融平台
+            </p>
+            <p class="tabText" style="width: 476px;margin-top: 48px">基于工业互联网+区块链技术构建产融平台，依托核心企业的信用基础，围绕产业链上下游企业，建立主体自治、数据自主、价值可信的金融服务平台。</p>
+          </div>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+    <el-row type="flex" align="middle" justify="center" style="margin-top: 100px" @mouseenter.native="clearShow()">
+      <span class="mainTitle">强企·工赋企业</span>
+    </el-row>
+    <el-row type="flex" align="middle" justify="center" style="margin-top: 20px;margin-bottom: 58px">
+      <span class="subTitle">智能制造、柔性生产、赋能数字化转型</span>
+    </el-row>
+    <div style="width: 900px;margin: 0 auto 100px">
+      <div style="display: inline-flex;width: 100%">
+        <div class="pcard">
+          <div class="pcard_div">
+            <div class="pcard_cover">
+              <div class="pcard_title">
+                150+
+              </div>
+              <div class="pcard_subTitle" style="margin-top: 18px">
+                企业上云
+              </div>
+              <div class="pcard_hide">
+                为广大中小企业提供多场景解决方案，满足各行业在不同阶段的业务需求，快速实现数字化转型。
+              </div>
+            </div>
+            <div class="pcard_up"></div>
+            <div class="pcard_down pcard_img1"></div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard_div">
+            <div class="pcard_cover">
+              <div class="pcard_title">
+                70+
+              </div>
+              <div class="pcard_subTitle" style="margin-top: 18px">
+                解决方案
+              </div>
+              <div class="pcard_hide">
+                从设备自动化、生产透明化、物流智能化、管理移动化、决策数据化等多个角度，贯通企业客户端到供应商端的全价值链流程与数据，实现设备数据采集到管理层决策的互联互通，进而达到提质增效降本，切实提高企业核心竞争力。
+              </div>
+            </div>
+            <div class="pcard_up"></div>
+            <div class="pcard_down pcard_img2"></div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard_div">
+            <div class="pcard_cover">
+              <div class="pcard_title">
+                100+
+              </div>
+              <div class="pcard_subTitle" style="margin-top: 18px">
+                增值服务
+              </div>
+              <div class="pcard_hide">
+                与西门子、PTC等国际工业软件巨头紧密合作，以产品分销为基础，通过安装、维护、培训及二次开发等服务，打造智能制造整体解决方案交付能力。
+              </div>
+            </div>
+            <div class="pcard_up"></div>
+            <div class="pcard_down pcard_img3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<el-row type="flex" align="middle" justify="center" style="margin-top: 100px; margin-bottom: 58px">
+      <span class="mainTitle">生态图</span>
+    </el-row>
+    <el-row type="flex" justify="center">
+      <img src="@/assets/images/big.gif" style="width: 100%">
+    </el-row>-->
+  </div>
+</template>
+
+<script>
+import * as api from '@/api/home'
+export default {
+  data() {
+    return {
+      show1: false,
+      show2: false,
+      show3: false,
+      show4: false,
+      show5: false,
+      show6: false,
+      show7: false,
+      show8: false,
+      activeName: '1',
+      time: null
+    }
+  },
+  /* async mounted() {
+    await this.getBanner();
+    await this.getText();
+    await this.getNew();
+    await this.getHot();
+    await this.getSpecial();
+    await this.getLiterature();
+    await this.getWhy();
+  },*/
+  beforeDestroy() {
+    clearInterval(this.time)
+  },
+  mounted() {
+    this.time = setInterval(() => {
+      if (this.activeName === '4') {
+        this.activeName = '1'
+      } else {
+        this.activeName = (parseFloat(this.activeName) + 1).toString()
+      }
+    }, 5000)
+  },
+  methods: {
+    goPage(name) {
+      this.$router.push({
+        name: name
+      })
+    },
+    goDevPlatForm(flag) {
+      this.$router.push({
+        name: 'devPlatform',
+        params: {
+          flag: flag
+        }
+      })
+    },
+    goSXSY() {
+      window.open('http://103.36.192.87:10025/')
+    },
+    goFBXQ() {
+      this.$router.push({
+        path: '/robot'
+      })
+    },
+    clearShow() {
+      this.show1 = false
+      this.show2 = false
+      this.show3 = false
+      this.show4 = false
+      this.show5 = false
+      this.show6 = false
+      this.show7 = false
+      this.show8 = false
+    },
+    // 获取首页轮播图
+    async getBanner() {
+      const res = await api.getBanner()
+      this.bannerList = res.data || []
+    },
+    // 获取首页文案
+    async getText() {
+      const { data } = await api.getText()
+      this.title = data.title
+      this.content = data.content
+    },
+    // 获取最新产品
+    async getNew() {
+      const { data } = await api.getNew({
+        limit: 4,
+        offset: 1
+      })
+      this.newList = data
+    },
+    // 获取最热产品
+    async getHot() {
+      const { data } = await api.getHot({
+        limit: 4,
+        offset: 1
+      })
+      this.hotList = data
+    },
+    // 获取特殊产品
+    async getSpecial() {
+      const { data } = await api.getSpecial({
+        limit: 4,
+        offset: 1
+      })
+      this.specialList = data
+    },
+    // 首页获取文献分页
+    async getLiterature() {
+      const { data } = await api.getLiterature({
+        limit: 9,
+        offset: 1
+      })
+      this.citationsList = data
+    },
+    // 获取首页为什么选择我们
+    async getWhy() {
+      const { data } = await api.getWhy()
+      const content = JSON.parse(data.content || '[]')
+      this.whyList = content
+    },
+    // 去商品列表
+    goToProduct(url) {
+      this.$router.push({
+        path: `/product/index/${url}`
+      })
+    },
+    // 去文献
+    goToCitationsDetail(item) {
+      this.$router.push({
+        path: `/citations/detail`,
+        query: {
+          id: item.id
+        }
+      })
+    },
+    // 去文献列表
+    goToCitations() {
+      this.$router.push({
+        path: `/citations/list`
+      })
+    },
+    // bananer跳转
+    goToLink(item) {
+      if (item.link) {
+        window.open(item.link)
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.dashboard {
+  &-container {
+    .el-button--myRed {
+      border-color: #D80E19;
+      color: #D80E19;
+      border-radius: initial;
+    }
+    .textBtn {
+      color: #999;
+    }
+    .textBtn:hover {
+      color: #46a6ff;
+    }
+    .carousel_img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .carousel_logo {
+      width: 140px;
+      display: block;
+      margin-bottom: 24px;
+    }
+    .carousel_div {
+      position: absolute;
+      top: 110px;
+      left: 18%;
+      transition: all 1s;
+      opacity: 1;
+      transform: translateY(0)!important;
+    }
+    .banner_h1 {
+      font-weight: bold;
+      font-size: 48px;
+      margin-bottom: 4px;
+    }
+    .banner_h2 {
+      font-size: 24px;
+      color: #505152;
+      margin-top: 24px;
+    }
+    @media only screen and (max-width: 1435px) {
+      .carousel_div {
+        left: 5%
+      }
+    }
+    @media only screen and (min-width:1436px) and (max-width: 1670px) {
+      .carousel_div {
+        left: 10%
+      }
+    }
+    .tool_img {
+      height: 52px;
+      display: block;
+    }
+    .mainTitle {
+      font-size: 36px;
+      font-weight: bold;
+    }
+    .subTitle {
+      font-size: 21px;
+      color: #999999;
+    }
+    .listCard {
+      margin:0 12px;
+      width: 280px;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .white_card {
+      cursor: pointer;
+      position:absolute;
+      width: 280px;
+      height: 360px;
+      background-image: url("../../assets/images/white_card.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
+      box-shadow:0 0 10px rgba(51, 51, 51, .45);
+    }
+    .card_zhzs {
+      background-image: url("../../assets/images/card_zhzs.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .card_zczx {
+      background-image: url("../../assets/images/card_zczx.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .card_zqhd {
+      background-image: url("../../assets/images/card_zqhd.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .card_xmsb {
+      background-image: url("../../assets/images/card_xmsb.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .card_ajgl {
+      background-image: url("../../assets/images/card_ajgl.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .card_hbjk {
+      background-image: url("../../assets/images/card_hbjk.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .card_bgsc {
+      background-image: url("../../assets/images/card_bgsc.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .card_jczc {
+      background-image: url("../../assets/images/card_jczc.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .cardTitle {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .cardSubTitle {
+      font-size: 12px;
+      color: #434343;
+      margin-bottom: 32px;
+    }
+    .cardText {
+      font-size: 15px;
+      color: #6B6B6B;
+      letter-spacing: 2px;
+      line-height: 20px;
+    }
+    ::v-deep .el-tabs__nav-scroll {
+      display: flex;
+      justify-content: center;
+    }
+    ::v-deep .el-tabs__item {
+      padding: 0 100px;
+    }
+    ::v-deep .el-tabs__item {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    ::v-deep .el-tabs__item.is-active {
+      color: #D80E19;
+    }
+    ::v-deep .el-tabs__active-bar {
+      background-color: #D80E19;
+    }
+    ::v-deep .el-tabs__item:hover {
+      color: #D80E19;
+    }
+    .tab1 {
+      cursor: pointer;
+      height: 480px;
+      background-image: url("../../assets/images/tab1.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
+    }
+    .tab2 {
+      cursor: pointer;
+      height: 480px;
+      background-image: url("../../assets/images/tab2.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
+    }
+    .tab3 {
+      cursor: pointer;
+       height: 480px;
+       background-image: url("../../assets/images/tab3.png");
+       background-repeat: no-repeat;
+       background-size: 100% 100%;
+       background-position: center;
+     }
+    .tab4 {
+      cursor: pointer;
+      height: 480px;
+      background-image: url("../../assets/images/tab4.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
+    }
+    .tabDiv {
+      margin-left: 60%;
+      padding-top: 145px
+    }
+    .tabTitle {
+      font-size: 40px;
+      color: #D80E19;
+    }
+    .tabText {
+      font-size: 18px;
+      letter-spacing: 4px;
+    }
+    .pcard {
+      width: 20%;
+      height: 540px;
+      position: relative;
+      flex-grow: 1;
+      padding-left: 12px;
+      padding-right: 12px;
+      transition: .65s;
+      &:hover {
+        width: 36%;
+      }
+    }
+    .pcard_div {
+      width: 100%;
+      position: relative;
+    }
+    .pcard_cover {
+      width: 100%;
+      height: 540px;
+      position: absolute;
+      top: 0;
+      padding: 36px 24px 0;
+      z-index: 1;
+      background: transparent;
+      box-shadow: 0 0 40px 0 rgba(0,70,147,.2);
+      overflow: hidden;
+      .pcard_title {
+        font-size: 48px;
+        font-weight: bold;
+      }
+      .pcard_subTitle {
+        font-size: 24px;
+      }
+      .pcard_hide {
+        display: none;
+        width: 330px;
+        font-size: 16px;
+        line-height: 30px;
+        color: #222;
+        margin-top: 48px;
+      }
+      &:hover {
+        color: #fff;
+        background:-moz-linear-gradient(top,rgba(216, 14, 25, 1),rgba(75, 4, 8, 0.2));
+
+        background:-ms-linear-gradient(top,rgba(216, 14, 25, 1),rgba(75, 4, 8, 0.2));
+
+        background:-o-linear-gradient(top,rgba(216, 14, 25, 1),rgba(75, 4, 8, 0.2));
+
+        background:-webkit-linear-gradient(top,rgba(216, 14, 25, 1),rgba(75, 4, 8, 0.2));
+        .pcard_hide {
+          color: #fff;
+          display: block;
+        }
+      }
+    }
+    .pcard_up {
+      width: 100%;
+      height: 210px;
+      background: #fff;
+    }
+    .pcard_down {
+      display: block;
+      position: relative;
+      height: 330px;
+      background-size: cover;
+      overflow: hidden;
+      color: #fff;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .pcard_img1 {
+      background-image: url("../../assets/images/pcard1.png");
+    }
+    .pcard_img2 {
+      background-image: url("../../assets/images/pcard2.png");
+    }
+    .pcard_img3 {
+      background-image: url("../../assets/images/pcard3.png");
+    }
+	}
+}
+</style>

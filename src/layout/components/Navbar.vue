@@ -1,0 +1,1051 @@
+<template>
+  <div class="navbar">
+    <img
+      src="@/assets/images/logo_title.png"
+      class="navbar_logo"
+      @click="goBackHome"
+    />
+    <el-menu
+      v-model="activeIndex"
+      class="myHeader"
+      mode="horizontal"
+      background-color="#fff"
+      @select="handleSelect"
+    >
+      <!--<el-menu-item index="1">应用服务</el-menu-item>-->
+      <el-submenu index="2">
+        <template slot="title">应用服务</template>
+        <el-card
+          class="dropDown"
+          shadow="never"
+          :body-style="{ padding: '2px 8px 8px 8px' }"
+        >
+          <div class="dropDownCard">
+            <el-row>
+              <el-col :span="24">
+                <el-tabs
+                  class="tab"
+                  v-model="activeName"
+                  :tab-position="tabPosition"
+                >
+                  <el-tab-pane label="政府应用服务" name="first">
+                    <div class="tabs">
+                      <div class="tabs_tit">经济态势</div>
+                      <div class="tabs_con">
+                        <!-- <div><a href="http://103.36.192.87:10025/#/board_out" target="_blank"><p>区域概览</p> <i class="el-icon-arrow-right"></i></a></div> -->
+                        <div>
+                          <p>
+                            <router-link
+                              target="_blank"
+                              :to="{
+                                path: '/bigScreen',
+                              }"
+                              >区域概览</router-link
+                            >
+                          </p>
+                          <i class="el-icon-arrow-right"></i>
+                        </div>
+                        <div @click="cydt">
+                          <p>产业地图</p>
+                          <i class="el-icon-arrow-right"></i>
+                        </div>
+                        <div @click="cyzb">
+                          <p>产业指标监测</p>
+                          <i class="el-icon-arrow-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tabs">
+                      <div class="tabs_tit">环保平台</div>
+                      <div class="tabs_con">
+                        <div>
+                          <a href="http://111.23.173.10:18886" target="_blank">
+                            <p>污染溯源</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a href="http://111.23.173.10:18887" target="_blank">
+                            <p>视频监控</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a href="http://111.23.173.10:18884" target="_blank">
+                            <p>一企一管</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a href="http://111.23.173.10:18885" target="_blank">
+                            <p>大屏管理</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tabs">
+                      <div class="tabs_tit">安监平台</div>
+                      <div class="tabs_con">
+                        <div>
+                          <a
+                            href="http://47.105.78.207:8084/video-insight/"
+                            target="_blank"
+                          >
+                            <p>物联数据采集</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a href="http://47.105.78.207:8083/" target="_blank">
+                            <p>大数据分析</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://47.105.78.207:8081/council-service-manage/"
+                            target="_blank"
+                          >
+                            <p>安委会管理</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://47.105.78.207:8081/daily-supervision-manage/"
+                            target="_blank"
+                          >
+                            <p>日常监管</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://47.105.78.207:8085/knowledge-service-manage/"
+                            target="_blank"
+                          >
+                            <p>知识库</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tabs">
+                      <div
+                        class="tabs_con"
+                        style="font-weight: bold; color: #333"
+                      >
+                        <div>
+                          <a href="http://218.90.150.118:10088" target="_blank">
+                            <p>智慧招商平台</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div @click="zqhd">
+                          <p>政企互动平台</p>
+                          <i class="el-icon-arrow-right"></i>
+                        </div>
+                        <div @click="zcxz">
+                          <p>政策资讯平台</p>
+                          <i class="el-icon-arrow-right"></i>
+                        </div>
+                        <div>
+                          <a href="http://218.90.150.118:16007" target="_blank">
+                            <p>项目申报平台</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                      </div>
+                    </div>
+                  </el-tab-pane>
+                  <el-tab-pane label="产业应用服务" name="second">
+                    <div class="tabs">
+                      <div class="tabs_tit">产业链</div>
+                      <div class="tabs_con">
+                        <div>
+                          <a
+                            href="http://zzj.bjdv.com:8088/p/govLogin"
+                            target="_blank"
+                            style="display: block"
+                          >
+                            <p>产业链管理后台</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <!-- <div @click="gxdj"><p>供需对接平台</p> <i class="el-icon-arrow-right"></i></div> -->
+                        <div @click="cyxt">
+                          <p>产业协同平台</p>
+                          <i class="el-icon-arrow-right"></i>
+                        </div>
+                        <div @click="gyljr">
+                          <p>供应链金融平台</p>
+                          <i class="el-icon-arrow-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tabs">
+                      <div class="tabs_tit">资源共享</div>
+                      <div class="tabs_con">
+                        <div>
+                          <a
+                            href="http://103.36.192.87:10009/togplatform/digital/index.html"
+                            target="_blank"
+                            style="display: block"
+                          >
+                            <p>数字营销</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://103.36.192.87:10009/logistics/index.jhtml"
+                            target="_blank"
+                            style="display: block"
+                          >
+                            <p>智慧物流</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://103.36.192.87:10009/shareDesign/index.jhtml"
+                            target="_blank"
+                            style="display: block"
+                          >
+                            <p>共享设计</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://103.36.192.87:10009/zlxt/index.jhtml"
+                            target="_blank"
+                            style="display: block"
+                          >
+                            <p>智联协同</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://103.36.192.87:10009/smartstorage/index.jhtml"
+                            target="_blank"
+                            style="display: block"
+                          >
+                            <p>智慧仓储</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://103.36.192.87:10009/devops/index.jhtml"
+                            target="_blank"
+                            style="display: block"
+                          >
+                            <p>共享运维</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                      </div>
+                    </div>
+                  </el-tab-pane>
+                  <el-tab-pane label="企业应用服务" name="third">
+                    <div class="tabs">
+                      <div class="tabs_tit">企业服务平台</div>
+                      <div class="tabs_con">
+                        <div>
+                          <a
+                            href="http://103.36.192.87:10025/"
+                            target="_blank"
+                            style="display: block"
+                            ><p>企业上云服务平台</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tabs">
+                      <div class="tabs_tit">创新应用</div>
+                      <div class="tabs_con">
+                        <div>
+                          <a
+                            href="http://192.168.60.221:13005/"
+                            target="_blank"
+                            style="display: block"
+                            ><p>IOT+MES</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://124.207.254.168:3004/"
+                            target="_blank"
+                            style="display: block"
+                            ><p>IOT+节能+云客服</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tabs">
+                      <div class="tabs_tit">云应用平台</div>
+                      <div class="tabs_con">
+                        <div>
+                          <a
+                            href="http://datangiot.cn:9003/pages/login.jsp"
+                            target="_blank"
+                            style="display: block"
+                            ><p>协同营销</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://datangiot.cn:9012/Windchill/app"
+                            target="_blank"
+                            style="display: block"
+                            ><p>智能设计</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://datangiot.cn:9020/hx-semes/login.jsp"
+                            target="_blank"
+                            style="display: block"
+                            ><p>智能制造</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://datangiot.cn:9005/#/login"
+                            target="_blank"
+                            style="display: block"
+                            ><p>IOT</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://113.57.86.223:9906/#/login"
+                            target="_blank"
+                            style="display: block"
+                            ><p>TMS</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://113.57.86.223:9906/#/login"
+                            target="_blank"
+                            style="display: block"
+                            ><p>WMS</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://datangiot.cn:9018/bim#/login"
+                            target="_blank"
+                            style="display: block"
+                            ><p>智能运维</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                        <div>
+                          <a
+                            href="http://datangiot.cn:9010/SmartEye/home/login.do"
+                            target="_blank"
+                            style="display: block"
+                            ><p>数据分析</p>
+                            <i class="el-icon-arrow-right"></i
+                          ></a>
+                        </div>
+                      </div>
+                    </div>
+                  </el-tab-pane>
+                </el-tabs>
+              </el-col>
+            </el-row>
+            <!--<el-row>
+              <el-col :span="4">
+                <span class="subTitle">行业解决方案</span>
+              </el-col>
+              <el-col :span="4" :offset="4">
+                <span class="subTitle">应用服务</span>
+              </el-col>
+            </el-row>
+            <el-row style="margin-top: 24px">
+              <el-col :span="4">
+                <span class="subText">流程型行业</span>
+                <div class="myDivider"></div>
+                <span class="thText" @click="goSubMenu('permanent')">稀土永磁行业</span>
+                <span class="thText" @click="goSubMenu('photovoltaic')">光伏行业</span>
+                <span class="thText" @click="goSubMenu('autoParts')">汽车配件行业</span>
+                <span class="thText" @click="goSubMenu('cement')">水泥行业</span>
+              </el-col>
+              <el-col :span="4">
+                <span class="subText">离散型行业</span>
+                <div class="myDivider"></div>
+                <span class="thText" @click="goSubMenu('spinning')">纺织行业</span>
+                <span class="thText" @click="goSubMenu('garment')">服装加工行业</span>
+                <span class="thText" @click="goSubMenu('machining')">机加工行业</span>
+                <span class="thText" @click="goSubMenu('pump')">水泵行业</span>
+                <span class="thText" @click="goSubMenu('forming')">成型行业</span>
+                <span class="thText" @click="goSubMenu('valve')">阀门制造行业</span>
+                <span class="thText" @click="goSubMenu('equipment')">装备制造</span>
+                <span class="thText" @click="goSubMenu('electrical')">电器行业</span>
+              </el-col>
+              <el-col :span="4">
+                <span class="subText">公共服务平台</span>
+                <div class="myDivider"></div>
+                <span class="thText"><a href="http://103.36.192.87:10025/" target="_blank" style="display: block">企业上云服务平台</a></span>
+              </el-col>
+              <el-col :span="4">
+                <span class="subText">典型案例</span>
+                <div class="myDivider"></div>
+                <span class="thText"><a href="http://192.168.60.221:13005/" target="_blank" style="display: block">IOT+MES</a></span>
+                <span class="thText"><a href="http://124.207.254.168:3004/" target="_blank" style="display: block">IOT+节能+云客服</a></span>
+              </el-col>
+              <el-col :span="4">
+                <span class="subText">云应用平台</span>
+                <div class="myDivider"></div>
+                <span class="thText"><a href="http://datangiot.cn:9003/pages/login.jsp" target="_blank" style="display: block">协同营销</a></span>
+                <span class="thText"><a href="http://datangiot.cn:9012/Windchill/app" target="_blank" style="display: block">智能设计</a></span>
+                <span class="thText"><a href="http://datangiot.cn:9020/hx-semes/login.jsp" target="_blank" style="display: block">智能制造</a></span>
+                <span class="thText"><a href="http://datangiot.cn:9005/#/login" target="_blank" style="display: block">IOT</a></span>
+                <span class="thText"><a href="http://113.57.86.223:9906/#/login" target="_blank" style="display: block">TMS</a></span>
+                <span class="thText"><a href="http://113.57.86.223:9906/#/login" target="_blank" style="display: block">WMS</a></span>
+                <span class="thText"><a href="http://datangiot.cn:9018/bim#/login" target="_blank" style="display: block">智能运维</a></span>
+                <span class="thText"><a href="http://datangiot.cn:9010/SmartEye/home/login.do" target="_blank" style="display: block">数据分析</a></span>
+                <span class="thText">企业测评</span>
+              </el-col>
+            </el-row>-->
+          </div>
+        </el-card>
+      </el-submenu>
+      <el-submenu index="3">
+        <template slot="title">解决方案</template>
+        <el-card
+          class="dropDown"
+          shadow="never"
+          :body-style="{ padding: '2px 8px 8px 8px' }"
+        >
+          <div class="dropDownCard">
+            <el-row>
+              <el-col :span="4">
+                <span class="subTitle">行业解决方案</span>
+              </el-col>
+            </el-row>
+            <el-row style="margin-top: 24px">
+              <el-col :span="4">
+                <span class="subText">流程型行业</span>
+                <div class="myDivider"></div>
+                <span class="thText" @click="goSubMenu('permanent')"
+                  >稀土永磁行业</span
+                >
+                <span class="thText" @click="goSubMenu('photovoltaic')"
+                  >光伏行业</span
+                >
+                <span class="thText" @click="goSubMenu('autoParts')"
+                  >汽车配件行业</span
+                >
+                <span class="thText" @click="goSubMenu('cement')"
+                  >水泥行业</span
+                >
+              </el-col>
+              <el-col :span="4">
+                <span class="subText">离散型行业</span>
+                <div class="myDivider"></div>
+                <span class="thText" @click="goSubMenu('spinning')"
+                  >纺织行业</span
+                >
+                <span class="thText" @click="goSubMenu('garment')"
+                  >服装加工行业</span
+                >
+                <span class="thText" @click="goSubMenu('machining')"
+                  >机加工行业</span
+                >
+                <span class="thText" @click="goSubMenu('pump')">水泵行业</span>
+                <span class="thText" @click="goSubMenu('forming')"
+                  >成型行业</span
+                >
+                <span class="thText" @click="goSubMenu('valve')"
+                  >阀门制造行业</span
+                >
+                <span class="thText" @click="goSubMenu('equipment')"
+                  >装备制造</span
+                >
+                <span class="thText" @click="goSubMenu('electrical')"
+                  >电器行业</span
+                >
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
+      </el-submenu>
+      <el-menu-item index="4" @click="goMALL">工业MALL</el-menu-item>
+      <el-menu-item index="5" @click="goGXPT">生态社区</el-menu-item>
+      <el-menu-item index="6" @click="goXWZX">新闻资讯</el-menu-item>
+      <el-menu-item index="7" @click="goKFZ">开发者</el-menu-item>
+      <el-menu-item index="8" @click="goUs">关于我们</el-menu-item>
+      <!--      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>-->
+    </el-menu>
+    <div style="display: flex; flex-grow: 1"></div>
+    <el-input
+      v-model="input"
+      placeholder="搜索"
+      prefix-icon="el-icon-search"
+      size="small"
+      style="width: 140px"
+    >
+    </el-input>
+    <div v-if="!sess" style="display: flex">
+      <el-button
+        size="small"
+        type="login"
+        style="width: 80px; margin-left: 10px"
+        @click="goLogin"
+      >
+        登录
+      </el-button>
+      <el-button size="small" type="reg" @click="goRegister">
+        用户注册
+      </el-button>
+    </div>
+    <div v-else>
+      <div class="header-btn userBox">
+        <a href="javascipt:void(0)">
+          <img
+            src="@/assets/images/login/class_name5.png"
+            class="head-user-img"
+          />
+          <br />
+          wxgy
+        </a>
+        <div class="operationBox">
+          <div class="triangle"></div>
+          <ul>
+            <li @click="logout">退出登录</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import * as api from "@/api/application";
+// import { mapGetters } from 'vuex'
+export default {
+  data() {
+    return {
+      input: "",
+      searchKey: "",
+      appName: "",
+      appId: "",
+      applicationDetailList: [],
+      activeIndex: "",
+      sess: "",
+      tabPosition: "left", // tabs位置
+      activeName: "first", // tabs默认
+    };
+  },
+  computed: {
+    // ...mapGetters(['productList', 'applicationList', 'resourcesList', 'supportList', 'webList']),
+    locale() {
+      return this.$i18n.locale;
+    },
+  },
+  watch: {
+    activeIndex(val) {
+      console.log(11);
+    },
+  },
+  mounted() {
+    // 获取sessionStorage数据
+    if (
+      sessionStorage.user != {} &&
+      sessionStorage.user != undefined &&
+      sessionStorage.user != null &&
+      sessionStorage.user != ""
+    ) {
+      this.sess = JSON.parse(sessionStorage.user).id;
+    }
+  },
+  methods: {
+    goSubMenu(path) {
+      this.$router.push({ path: `/${path}` });
+    },
+    goXWZX() {
+      this.$router.push({ path: "/news2" });
+    },
+    goKFZ() {
+      this.$router.push({ path: "/devPlatform" });
+    },
+    goMALL() {
+      this.$router.push({ path: "/mall" });
+    },
+    goGXPT() {
+      this.$router.push({ path: "/supplyDemand" });
+    },
+    goUs() {
+      this.$router.push({ path: "/aboutUs" });
+    },
+    goLogin() {
+      this.$router.push({ path: "/login" });
+    },
+    goRegister() {
+      this.$router.push({ path: "/register" });
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    // 触发搜索
+    onSearch() {
+      if (this.searchKey.length > 0) {
+        this.$router.push({
+          path: "/product/index/search",
+          query: {
+            searchKey: this.searchKey,
+          },
+        });
+      }
+    },
+    // 修改语言
+    changLang(lang) {
+      window.open(
+        this.webList.find((item) => {
+          return item.type == lang;
+        }).content
+      );
+    },
+    // 返回首页
+    goBackHome() {
+      this.$router.push({ path: "/dashboard" });
+    },
+    // 获得应用详情
+    async getAppDetail(item) {
+      this.appName = item.name;
+      this.appId = item.id;
+      const { data } = await api.getPage({
+        typeId: item.id,
+        limit: 15,
+        offset: 1,
+      });
+      this.applicationDetailList = data;
+    },
+    // 去产品列表
+    goToProduct(ele) {
+      this.$router.push({
+        path: "/product/index/list",
+        query: {
+          typeId: ele.id,
+          fatherId: ele.superiorId,
+          classify: ele.classify,
+        },
+      });
+    },
+    // 去资源中心
+    goToResources(item) {
+      if (item.id == "COAs") {
+        this.$router.push({
+          path: "/resources/index/COAs",
+        });
+      } else {
+        this.$router.push({
+          path: "/resources/index/detail",
+          query: {
+            type: item.type,
+            id: item.id,
+          },
+        });
+      }
+    },
+    // 去支持
+    goToSupport(item) {
+      this.$router.push({
+        path: "/support/list",
+        query: {
+          id: item.id,
+        },
+      });
+    },
+    // 去支持列表
+    goToSupportList() {
+      this.$router.push({
+        path: "/support/index",
+      });
+    },
+    // 去应用列表
+    goToAppList() {
+      this.$router.push({
+        path: "/applications/list",
+        query: {
+          typeId: this.appId,
+        },
+      });
+    },
+    // 去应用详情
+    goToAppDetail(item) {
+      this.$router.push({
+        path: "/applications/detail",
+        query: {
+          id: item.id,
+        },
+      });
+    },
+    // 去新闻
+    goToNews() {
+      this.$router.push({
+        path: "/news/list",
+      });
+    },
+    // 去关于我们
+    goToAbout(url) {
+      this.$router.push({
+        path: url,
+      });
+    },
+    // 	去联系我们
+    goToContact() {
+      this.$router.push({
+        path: "/contact/index",
+      });
+    },
+    // 退出
+    logout() {
+      sessionStorage.user = {};
+      this.$router.push({ path: "/login" });
+    },
+    // 智慧招商平台
+    zhzs() {
+      const routeUrl = this.$router.resolve({
+        path: "login_gov",
+        query: { tit: "智慧招商平台", titEn: "Smart Investment Platform" },
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+    // 政企互动平台
+    zqhd() {
+      const routeUrl = this.$router.resolve({
+        path: "login_gov",
+        query: {
+          tit: "政企互动平台",
+          titEn: "Politics&Enterprise Interaction  Platform",
+        },
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+    // 政策资讯平台
+    zcxz() {
+      const routeUrl = this.$router.resolve({
+        path: "login_gov",
+        query: { tit: "政策资讯平台", titEn: "Policy Information Platform" },
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+    // 项目申报平台
+    xmsb() {
+      const routeUrl = this.$router.resolve({
+        path: "login_gov",
+        query: { tit: "项目申报平台", titEn: "Project application Platform" },
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+    // 供需对接平台
+    gxdj() {
+      const routeUrl = this.$router.resolve({
+        path: "login_enterprise",
+        query: { tit: "供需对接平台" },
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+    // 产业协同平台
+    cyxt() {
+      /*const routeUrl = this.$router.resolve({ path: 'login_enterprise', query: { tit: '产业协同平台' }})
+      window.open(routeUrl.href, '_blank')*/
+      window.open("https://www.yarnplat.com/", "_blank");
+    },
+    // 供应链金融平台
+    gyljr() {
+      const routeUrl = this.$router.resolve({
+        path: "login_enterprise",
+        query: { tit: "供应链金融平台" },
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+    // 区域概览
+    /*qygl() {
+      const routeUrl = this.$router.resolve({ path: 'login_gov', query: { tit: '区域概览', titEn: 'Regional Overview' }})
+      window.open(routeUrl.href, '_blank')
+    },*/
+    // 产业地图
+    cydt() {
+      const routeUrl = this.$router.resolve({
+        path: "login_gov",
+        query: { tit: "产业地图", titEn: "Industry Map" },
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+    // 产业指标监测
+    cyzb() {
+      const routeUrl = this.$router.resolve({
+        path: "login_gov",
+        query: { tit: "产业指标监测", titEn: "Industrial Index Monitoring" },
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.navbar {
+  height: 60px;
+  /*overflow: hidden;*/
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 16px;
+  .navbar_logo {
+    height: 36px;
+  }
+  @media only screen and (max-width: 1435px) {
+    .myHeader {
+      margin: 0 0 0 -60px !important;
+    }
+  }
+  .myHeader {
+    margin: 0 36px 0 36px;
+    transition: all 1s;
+    opacity: 1;
+    transform: translateY(0) !important;
+    min-width: 711px;
+    ::v-deep .el-menu-item {
+      font-weight: bold;
+      color: #6f6f6f;
+    }
+    ::v-deep .el-submenu__title {
+      font-weight: bold;
+      color: #6f6f6f;
+    }
+  }
+  ::v-deep .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+    color: #d80e19 !important;
+    border-bottom: 2px solid #d80e19 !important;
+    background-color: #fff !important;
+  }
+  ::v-deep .el-menu--horizontal .el-menu-item:not(.is-disabled):focus {
+    color: #6f6f6f;
+    border-bottom: 2px solid transparent;
+    background-color: #fff !important;
+  }
+  ::v-deep .el-menu--horizontal > .el-menu-item.is-active {
+    border-bottom: 2px solid transparent;
+  }
+  ::v-deep .el-menu--horizontal > .el-submenu .el-submenu__title:hover {
+    color: #d80e19 !important;
+    border-bottom: 2px solid #d80e19 !important;
+    background-color: #fff !important;
+  }
+  ::v-deep .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
+    border-bottom: 2px solid transparent;
+  }
+  ::v-deep .el-input__inner {
+    border-radius: initial;
+    background-color: #f6f6f6;
+    border: 1px solid #ddd;
+  }
+  .el-button--login {
+    border-color: #d80e19;
+    color: #d80e19;
+  }
+  .el-button--reg {
+    border-color: #d80e19;
+    color: #fff;
+    background-color: #d80e19;
+  }
+}
+.dropDown {
+  border: none;
+  width: 100vw;
+  min-width: 1286px;
+  background-color: rgba(252, 252, 252, 1);
+}
+@media only screen and (max-width: 1435px) {
+  .dropDownCard {
+    padding: 0 0 0 255px !important;
+  }
+}
+.dropDownCard {
+  padding: 0 0 0 350px;
+}
+.subTitle {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d9141f;
+}
+.subText {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
+}
+.thText {
+  margin-bottom: 16px;
+  display: block;
+  font-size: 14px;
+  color: #888888;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    color: #d80e19;
+  }
+}
+.myDivider {
+  margin: 16px 30% 16px 0;
+  height: 1px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.header-btn {
+  width: 91px;
+  text-align: center;
+  font-size: 14px;
+  position: relative;
+  img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin-bottom: 2px !important;
+  }
+  &:hover .operationBox {
+    display: block;
+  }
+  .operationBox {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    z-index: 99999999999999;
+    display: none;
+    .triangle {
+      width: 0;
+      height: 0;
+      border-width: 0 15px 10px;
+      border-style: solid;
+      border-color: transparent transparent rgba(0, 17, 32, 0.48);
+      margin: 7px auto 0;
+      position: relative;
+    }
+    ul {
+      background: rgba(0, 17, 32, 0.48);
+      color: #fff;
+      padding: 0 15px;
+      cursor: pointer;
+      box-shadow: 0 2px 11px #eee;
+      margin: 0;
+      list-style: none;
+      li {
+        padding: 15px 0;
+        border-right: 0;
+        font-size: 12px;
+        width: 100%;
+        border-bottom: 1px dotted #ddd;
+        line-height: 24px;
+        a {
+          color: #fff;
+        }
+        &:last-child {
+          border-bottom: 0;
+        }
+        &:hover {
+          color: #ef8200;
+        }
+      }
+    }
+  }
+}
+
+/*tabs*/
+.tab {
+  ::v-deep .el-tabs__header {
+    padding: 30px 0 50px 0;
+
+    .el-tabs__active-bar {
+      display: none;
+    }
+
+    .el-tabs__item {
+      font-weight: bold;
+      margin: 0 20px;
+      padding: 0;
+      font-size: 16px;
+      margin-bottom: 10px;
+
+      &:hover {
+        color: #d80e19;
+      }
+    }
+
+    .el-tabs__item.is-active {
+      color: #d80e19;
+      border-bottom: 1px solid #d80e19;
+    }
+
+    ::after {
+      display: none;
+    }
+  }
+
+  ::v-deep .el-tabs__content {
+    padding: 30px 0 50px 50px;
+    border-left: 1px solid #cbcbcb;
+
+    .el-tab-pane {
+      display: flex;
+
+      .tabs {
+        width: 170px;
+        min-width: 140px;
+        margin-right: 100px;
+        line-height: 34px;
+
+        .tabs_tit {
+          font-weight: bold;
+          padding-bottom: 5px;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #cbcbcb;
+        }
+
+        .tabs_con {
+          color: #666;
+          p {
+            width: calc(100% - 14px);
+            float: left;
+          }
+
+          i {
+            font-size: 14px;
+          }
+
+          & > div:hover {
+            color: #d80e19;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
+<style>
+.el-menu--horizontal {
+  left: 0 !important;
+}
+.el-menu--popup {
+  background-color: rgba(252, 252, 252, 1) !important;
+}
+</style>
