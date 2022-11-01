@@ -2,17 +2,18 @@
   <div id="rankingChart" />
 </template>
 <script>
+import { getEnterpriseAndEquipmentRanking } from "@/api/bigScreen";
+
+const colorList = ["rgba(36, 180, 244, 1)", "rgba(104, 95, 193, 1)"];
 export default {
-  data() {
-    return {
-      colorLits: ["rgba(36, 180, 244, 1)", "rgba(104, 95, 193, 1)"],
-    };
-  },
   mounted() {
     this.initChart();
   },
   methods: {
-    initChart() {
+    async initChart() {
+      const { x, y } = await (
+        await getEnterpriseAndEquipmentRanking({ type: 2, address: "北京市" })
+      ).data;
       let myChart = this.$echarts.init(document.getElementById("rankingChart"));
       myChart.setOption({
         grid: {
@@ -48,7 +49,7 @@ export default {
         },
         yAxis: {
           type: "category",
-          data: ["Brazil", "Indonesia", "USA", "India", "China", "World"],
+          data: x,
           axisLine: {
             lineStyle: {
               color: "rgba(63, 107, 175, 1)",
@@ -58,24 +59,13 @@ export default {
             color: "#D2E9FF", //更改坐标轴文字颜色
           },
         },
-        series: [
-          {
-            name: "2011",
-            type: "bar",
-            data: [18203, 23489, 29034, 104970, 131744, 630230],
-            itemStyle: {
-              color: "rgba(36, 180, 244, 1)",
-            },
+        series: y.map((item, index) => ({
+          ...item,
+          type: "bar",
+          itemStyle: {
+            color: colorList[index],
           },
-          {
-            name: "2012",
-            type: "bar",
-            data: [19325, 23438, 31000, 121594, 134141, 681807],
-            itemStyle: {
-              color: "rgba(104, 95, 193, 1)",
-            },
-          },
-        ],
+        })),
       });
     },
   },

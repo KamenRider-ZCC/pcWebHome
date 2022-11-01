@@ -7,12 +7,17 @@ import Highcharts from "highcharts/highstock";
 import HighchartsMore from "highcharts/highcharts-more";
 import HighchartsDrilldown from "highcharts/modules/drilldown";
 import Highcharts3D from "highcharts/highcharts-3d";
+import { getEnterpriseTypePieGraph } from "@/api/bigScreen";
 
 HighchartsMore(Highcharts);
 HighchartsDrilldown(Highcharts);
 Highcharts3D(Highcharts);
+
+const colorList = ["#0BB4FF", "#FFF146", "#FF9726", "#40FFCD"];
+
 export default {
-  mounted() {
+  async mounted() {
+    const resData = (await getEnterpriseTypePieGraph()).data;
     const chart = Highcharts.chart("typeDistribution", {
       chart: {
         type: "pie",
@@ -66,24 +71,12 @@ export default {
       series: [
         {
           type: "pie",
-          name: "浏览器占比",
-          data: [
-            {
-              name: "Firefox", // 名称设置
-              y: 45.0, // 具体设置
-              color: "#0BB4FF", // 颜色获取，全部用0号颜色则最终图形的颜色是一致的
-            },
-            {
-              name: "IE", // 名称设置
-              y: 26.8, // 具体设置
-              color: "#FFF146", // 颜色获取，全部用0号颜色则最终图形的颜色是一致的
-            },
-            ["IE", 26.8],
-            ["Chrome", 12.8],
-            ["Safari", 8.5],
-            ["Opera", 6.2],
-            ["Others", 0.7],
-          ],
+          name: "上云企业类型分布",
+          data: resData.map((item, index) => ({
+            name: item.name,
+            y: Number(item.con),
+            color: colorList[index],
+          })),
         },
       ],
     });

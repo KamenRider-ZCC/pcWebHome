@@ -25,15 +25,18 @@ export default {
         { label: "月", value: "month" },
         { label: "周", value: "week" },
       ],
-      colorList: ["rgba(52, 204, 255, 1)", "rgba(239, 210, 66, 1)"],
+      colorList: ["#34CCFF", "#EFD242", "#E922BC"],
+      myChart: null,
     };
   },
   mounted() {
+    this.myChart = this.$echarts.init(document.getElementById("trendChart"));
     this.initChart();
   },
   methods: {
     chooseUnit(unit) {
       this.dataUnit = unit;
+      this.initChart();
     },
     async initChart() {
       const { x, y } = (
@@ -41,14 +44,16 @@ export default {
           type: this.dataUnit,
         })
       ).data;
-      let myChart = this.$echarts.init(document.getElementById("trendChart"));
-      myChart.setOption({
+      this.myChart.setOption({
         grid: {
           left: "3%",
-          right: "4%",
+          right: "6%",
           top: "10%",
           bottom: "5%",
           containLabel: true,
+        },
+        tooltip: {
+          trigger: "axis",
         },
         xAxis: {
           type: "category",
@@ -56,7 +61,7 @@ export default {
           data: x,
           axisLine: {
             lineStyle: {
-              color: "rgba(63, 107, 175, 1)",
+              color: "#3F6BAF",
             },
           },
           axisTick: {
@@ -82,13 +87,11 @@ export default {
           type: "line",
           symbolSize: 2,
           symbol: "circle",
-          name: item.name,
-          data: item.data,
           areaStyle: {
             color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
-                offset: 1,
-                color: "rgba(100, 232, 255, 0)",
+                offset: 0.5,
+                color: "#64E8FF",
               },
               {
                 offset: 0,
@@ -103,6 +106,7 @@ export default {
             color: this.colorList[index],
             width: 2,
           },
+          ...item,
         })),
       });
     },

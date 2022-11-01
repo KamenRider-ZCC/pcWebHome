@@ -36,21 +36,41 @@
       .anchorBL {
         display: none;
       }
-      .info-box {
-        position: absolute;
-        width: 293px;
-        height: 187px;
-        background-color: transparent;
+      .BMap_bottom {
+        display: none;
+      }
+      .BMap_pop {
+        > div {
+          display: none;
+          overflow: unset;
+        }
+        > img:nth-child(10) {
+          margin-top: 14px;
+          left: 340px !important;
+        }
+        > div:nth-child(9) {
+          display: block;
+          overflow: unset;
+          width: 340px !important;
+        }
+        :deep(.BMap_top) {
+          display: none;
+        }
+        :deep(.BMap_center) {
+          background: transparent;
+          border: none;
+          position: sticky !important;
+          height: 100%;
+        }
+      }
+      .BMap_bubble_content {
+        border-radius: 5px;
         border: 1px dotted #ffb94f;
-        background: rgba(255, 185, 79, 0.2);
-        padding: 10px;
-        box-sizing: border-box;
+        background: rgba(11, 21, 50, 0.6);
+        padding: 20px;
         .inside-box {
-          width: 273px;
-          height: 167px;
           border: 1px solid #ffb94f;
           padding: 10px;
-          box-sizing: border-box;
           color: #ffb94f;
           .title {
             font-size: 16px;
@@ -64,6 +84,21 @@
               margin-top: 7px;
             }
           }
+        }
+        //自定义滚动条样式
+        .info-window::-webkit-scrollbar {
+          width: 6px;
+          height: 1px;
+        }
+        .info-window::-webkit-scrollbar-thumb {
+          border-radius: 6px;
+          -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+          background: #535353;
+        }
+        .info-window::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+          border-radius: 6px;
+          background: #ededed;
         }
       }
     }

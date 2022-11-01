@@ -1,58 +1,93 @@
 <template>
-  <div class="list-container">
+  <div v-if="total" class="list-container">
     <el-table :data="tableData" max-height="230">
       <el-table-column
-        align="center"
         type="index"
         label="序号"
-      ></el-table-column>
-      <el-table-column prop="date" label="日期"> </el-table-column>
-      <el-table-column prop="name" label="姓名"> </el-table-column>
-      <el-table-column prop="address" label="地址"> </el-table-column>
-      <el-table-column label="状态">
+        align="center"
+        min-width="30"
+      />
+      <el-table-column
+        prop="warningsType"
+        label="报警类型"
+        align="center"
+        min-width="50"
+      />
+      <el-table-column
+        prop="warningsContent"
+        label="报警内容"
+        align="center"
+        min-width="50"
+      />
+      <el-table-column
+        prop="warningsTime"
+        label="报警时间"
+        align="center"
+        min-width="80"
+      />
+      <el-table-column
+        prop="equipmentName"
+        label="设备名称"
+        align="center"
+        min-width="40"
+      />
+      <el-table-column
+        prop="enterpriseName"
+        label="所属企业"
+        align="center"
+        min-width="120"
+      />
+      <el-table-column label="状态" align="center" min-width="40">
         <template slot-scope="scope">
-          <div style="color: rgba(255, 191, 5, 1)">
-            {{ scope.row.name }}
+          <div
+            :style="{
+              color: scope.row.warningsState ? '#ffbf05' : '#A8A498',
+            }"
+          >
+            {{ scope.row.warningsState ? "已处理" : "待处理" }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" align="center" min-width="40">
         <template slot-scope="scope">
           <div class="button">查看</div>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination layout="prev, pager, next" :total="total" />
+    <el-pagination
+      layout="prev, pager, next"
+      :total="total"
+      :current-page.sync="currentPage"
+      :page-size="5"
+      @current-change="handleCurrentChange"
+    />
   </div>
+  <div v-else class="table-empty">暂无数据</div>
 </template>
 <script>
+import { getWarningsPage } from "@/api/bigScreen";
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      tableData: [],
       total: 0,
+      currentPage: 1,
     };
+  },
+  mounted() {
+    this.getPage();
+  },
+  methods: {
+    async getPage() {
+      const res = (await getWarningsPage({ page: this.currentPage, rows: 5 }))
+        .data;
+      this.tableData = res.data;
+      this.total = res.totalRow;
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getPage();
+    },
   },
 };
 </script>
@@ -110,8 +145,21 @@ export default {
   ::v-deep .el-pagination {
     button,
     .el-pager li {
+      color: #d2e9ff;
       background: transparent;
+      &.active {
+        color: #1890ff;
+      }
     }
   }
+}
+.table-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: #d2e9ff;
 }
 </style>

@@ -2,34 +2,48 @@
   <div>
     <div class="data-item">
       <div class="title">平台用户(人）</div>
-      <div class="num">11,236</div>
+      <div class="num">{{ data.platformUserNum }}</div>
     </div>
     <div class="data-item">
       <div class="title">APP用户(人）</div>
-      <div class="num">9,999</div>
+      <div class="num">{{ data.appUserNum }}</div>
     </div>
     <div class="data-item">
       <div class="title">开发者人数</div>
-      <div class="num">21,561</div>
+      <div class="num">{{ data.developerNum }}</div>
     </div>
     <div class="data-item">
       <div class="title">星级上云企业</div>
-      <div class="num col40ffcd">986</div>
+      <div class="num col40ffcd">{{ data.threeEnterprise }}</div>
     </div>
     <div class="data-item">
       <div class="title">智改数转企业</div>
-      <div class="num col40ffcd">685</div>
+      <div class="num col40ffcd">{{ data.fourEnterprise }}</div>
     </div>
     <div class="data-item">
       <div class="title">上云设备</div>
-      <div class="num colffbb40">2,671</div>
+      <div class="num colffbb40">{{ data.equipment }}</div>
     </div>
     <div class="data-item">
       <div class="title">采集点数</div>
-      <div class="num colffbb40">6,209</div>
+      <div class="num colffbb40">{{ data.collection }}</div>
     </div>
   </div>
 </template>
+<script>
+import { getHeadInfo } from "@/api/bigScreen";
+
+export default {
+  data() {
+    return {
+      data: {},
+    };
+  },
+  async mounted() {
+    this.data = (await getHeadInfo()).data;
+  },
+};
+</script>
 <style lang="scss" scoped>
 .data-item {
   display: flex;

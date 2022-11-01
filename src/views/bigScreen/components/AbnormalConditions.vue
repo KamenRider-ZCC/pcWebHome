@@ -3,47 +3,59 @@
     <div class="date-unit">
       <div
         v-for="item in unitList"
-        :key="item"
-        :class="['unit', { active: dataUnit === item }]"
-        @click="chooseUnit(item)"
+        :key="item.value"
+        :class="['unit', { active: dataUnit === item.value }]"
+        @click="chooseUnit(item.value)"
       >
-        {{ item }}
+        {{ item.label }}
       </div>
     </div>
     <div id="abnormalConditions" />
   </div>
 </template>
 <script>
+import { getWarningsByDate } from "@/api/bigScreen";
 export default {
   data() {
     return {
-      dataUnit: "年",
-      unitList: ["年", "月", "周"],
-      colorLits: ["rgba(52, 204, 255, 1)", "rgba(104, 95, 193, 1)"],
+      dataUnit: "year",
+      unitList: [
+        { label: "年", value: "year" },
+        { label: "月", value: "month" },
+        { label: "周", value: "week" },
+      ],
+      myChart: null,
+      colorList: ["rgba(52, 204, 255, 1)", "rgba(104, 95, 193, 1)"],
     };
   },
   mounted() {
+    this.myChart = this.$echarts.init(
+      document.getElementById("abnormalConditions")
+    );
     this.initChart();
   },
   methods: {
     chooseUnit(unit) {
       this.dataUnit = unit;
+      this.initChart();
     },
-    initChart() {
-      let myChart = this.$echarts.init(
-        document.getElementById("abnormalConditions")
-      );
-      myChart.setOption({
+    async initChart() {
+      const { x, y } = (
+        await getWarningsByDate({
+          type: this.dataUnit,
+        })
+      ).data;
+      this.myChart.setOption({
         grid: {
           left: "3%",
-          right: "4%",
+          right: "6%",
           top: "10%",
           bottom: "5%",
           containLabel: true,
         },
         xAxis: {
           type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: x,
           axisLine: {
             lineStyle: {
               color: "rgba(63, 107, 175, 1)",
@@ -68,15 +80,13 @@ export default {
             },
           },
         },
-        series: [
-          {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: "bar",
-            itemStyle: {
-              color: "rgba(52, 204, 255, 1)",
-            },
+        series: y.map((item, index) => ({
+          ...item,
+          type: "bar",
+          itemStyle: {
+            color: this.colorList[index],
           },
-        ],
+        })),
       });
     },
   },

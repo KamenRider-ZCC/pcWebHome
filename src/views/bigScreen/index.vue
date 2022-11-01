@@ -7,7 +7,7 @@
       </div>
       <div class="map-box">
         <baidu-map class="map" :center="center" :zoom="zoom" @ready="handler">
-          <bm-overlay pane="labelPane" class="info-box" @draw="draw">
+          <bm-info-window :position="centerPoint" :show="infoShow">
             <div class="inside-box">
               <div class="title">易政达信息科技有限公司</div>
               <div class="info">经营状态：续存（在营、开业、在册）</div>
@@ -17,7 +17,7 @@
               <div class="info">组织机构代码：28921</div>
               <div class="info">企业（机构）类型：私营独资企业</div>
             </div>
-          </bm-overlay>
+          </bm-info-window>
         </baidu-map>
         <DataColumn class="data-column" />
         <EnterpriseTree
@@ -25,12 +25,16 @@
           title="星级上云企业"
           :num="10"
           :parent-node-src="require('@/assets/bigScreen/enterpriseNode.png')"
+          :tree-data="enterpriseTree"
+          @treeClick="treeClick"
         />
         <EnterpriseTree
           class="device-tree"
           title="上云设备"
           :num="10"
           :parent-node-src="require('@/assets/bigScreen/deviceNode.png')"
+          :tree-data="deviceTree"
+          @treeClick="treeClick"
         />
         <div class="frame star-trend">
           <Header title="企业星级上云趋势" />
@@ -76,6 +80,15 @@ import LatestStatus from "./components/LatestStatus.vue";
 import AlarmList from "./components/AlarmList.vue";
 import DataColumn from "./components/DataColumn.vue";
 import EnterpriseTree from "./components/EnterpriseTree.vue";
+import {
+  findByEnterpriseName,
+  findByEquipmentName,
+  getCoordinateList,
+  getEquipmentList,
+  findEnterpriseById,
+  findEquipmentById,
+} from "@/api/bigScreen";
+
 let mapv = null;
 export default {
   name: "bigScreen",
@@ -97,23 +110,34 @@ export default {
       zoom: 3,
       time: "",
       map: null,
+      enterpriseTree: [],
+      deviceTree: [],
+      infoShow: false,
+      centerPoint: null,
     };
   },
-  mounted() {
+  async mounted() {
+    this.enterpriseTree = (await findByEnterpriseName()).data;
+    this.deviceTree = (await findByEquipmentName()).data;
     setInterval(() => {
       this.time = dateFormat(new Date().getTime());
     }, 1000); //实时请求
   },
   methods: {
-    handler({ BMap, map }) {
+    async handler({ BMap, map }) {
       mapv = require("mapv");
       map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
-      // map.setMapStyle({ style: "midnight" });
+      map.setMapStyle({ style: "midnight" });
       this.map = map;
-      this.addMarker([
-        { lng: 116.404, lat: 39.925, type: "enterprise" },
-        { lng: 116.404, lat: 39.915, type: "device" },
-      ]);
+      const enterpriseList = (await getCoordinateList()).data.map((item) => ({
+        ...item,
+        type: "enterprise",
+      }));
+      const equipmentList = (await getEquipmentList()).data.map((item) => ({
+        ...item,
+        type: "device",
+      }));
+      this.addMarker([...enterpriseList, ...equipmentList]);
     },
     addMarker(list) {
       this.map.clearOverlays(); //清除覆盖物
@@ -143,8 +167,8 @@ export default {
           size: 53,
           methods: {
             click: (e) => {
-              if (e) {
-                console.log(e);
+              if (e.id) {
+                console.log(findEnterpriseById({ id: e.id }));
               }
             },
           },
@@ -152,10 +176,13 @@ export default {
         new mapv.baiduMapLayer(this.map, dataSet, options);
       }
     },
-    draw({ el, BMap, map }) {
-      const pixel = map.pointToOverlayPixel(new BMap.Point(116.404, 39.915));
-      el.style.left = pixel.x + "px";
-      el.style.top = pixel.y - 187 - 39 + "px";
+    treeClick(node) {
+      this.centerPoint = this.center = {
+        lng: node.longitude,
+        lat: node.latitude,
+      };
+      this.infoShow = true;
+      this.zoom = 15;
     },
   },
 };

@@ -52,7 +52,7 @@ module.exports = {
         }
       },
       '/bigscreen': {
-        target: 'http://62dw503664.goho.co:31401/',
+        target: 'http://libai258.gnway.cc/',
         changeOrigin: true,
         pathRewrite: {
           '^/bigscreen': '/bigscreen'
