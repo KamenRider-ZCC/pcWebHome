@@ -50,7 +50,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="40">
         <template slot-scope="scope">
-          <div class="button">查看</div>
+          <div class="button" @click="getAlarm(scope.row.warningsId)">查看</div>
         </template>
       </el-table-column>
     </el-table>
@@ -61,17 +61,33 @@
       :page-size="5"
       @current-change="handleCurrentChange"
     />
+    <el-dialog
+      custom-class="alarm-dialog"
+      title="报警信息"
+      :modal-append-to-body="false"
+      :visible.sync="dialogVisible"
+      width="30%"
+      top="8vh"
+    >
+      <div class="info">报警类型：{{ alarmData.warningsType }}</div>
+      <div class="info">报警内容：{{ alarmData.warningsContent }}</div>
+      <div class="info">报警时间：{{ alarmData.warningsTime }}</div>
+      <div class="info">设备名称：{{ alarmData.equipmentName }}</div>
+      <div class="info">所属企业：{{ alarmData.enterpriseName }}</div>
+    </el-dialog>
   </div>
   <div v-else class="table-empty">暂无数据</div>
 </template>
 <script>
-import { getWarningsPage } from "@/api/bigScreen";
+import { getWarningsPage, findByIdCustom } from "@/api/bigScreen";
 export default {
   data() {
     return {
       tableData: [],
       total: 0,
       currentPage: 1,
+      alarmData: {},
+      dialogVisible: false,
     };
   },
   mounted() {
@@ -87,6 +103,10 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val;
       this.getPage();
+    },
+    async getAlarm(id) {
+      this.alarmData = (await findByIdCustom({ id })).data;
+      this.dialogVisible = true;
     },
   },
 };
@@ -150,6 +170,17 @@ export default {
       &.active {
         color: #1890ff;
       }
+    }
+  }
+  ::v-deep .alarm-dialog {
+    border: 1px dotted #ffb94f;
+    background: rgba(11, 21, 50, 0.6);
+    .el-dialog__title,
+    .info {
+      color: #ffb94f;
+    }
+    .info + .info {
+      margin-top: 7px;
     }
   }
 }

@@ -51,13 +51,20 @@ module.exports = {
           '^/api': '/'
         }
       },
+      '/errtyy': {
+        target: 'http://zgje7p.natappfree.cc/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/errtyy': '/'
+        }
+      },
       '/bigscreen': {
         target: 'http://libai258.gnway.cc/',
         changeOrigin: true,
         pathRewrite: {
           '^/bigscreen': '/bigscreen'
         }
-      }
+      },
     }
   },
   configureWebpack: {

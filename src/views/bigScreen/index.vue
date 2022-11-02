@@ -7,15 +7,54 @@
       </div>
       <div class="map-box">
         <baidu-map class="map" :center="center" :zoom="zoom" @ready="handler">
-          <bm-info-window :position="centerPoint" :show="infoShow">
+          <bm-info-window
+            :position="{
+              lng: currentPoint.longitude,
+              lat: currentPoint.latitude,
+            }"
+            :show="infoShow"
+            :closeOnClick="false"
+            @clickclose="infoClose"
+          >
             <div class="inside-box">
-              <div class="title">易政达信息科技有限公司</div>
-              <div class="info">经营状态：续存（在营、开业、在册）</div>
-              <div class="info">法定代表人：孟松</div>
-              <div class="info">统一社会信用代码：91330602712</div>
-              <div class="info">成立日期：2000-08-09</div>
-              <div class="info">组织机构代码：28921</div>
-              <div class="info">企业（机构）类型：私营独资企业</div>
+              <template v-if="currentPoint.type === 'enterprise'">
+                <div class="title">{{ currentPoint.enterpriseName }}</div>
+                <div class="info">经营状态：{{ currentPoint.manageState }}</div>
+                <div class="info">
+                  法定代表人：{{ currentPoint.representative }}
+                </div>
+                <div class="info">
+                  统一社会信用代码：{{ currentPoint.creditCode }}
+                </div>
+                <div class="info">
+                  成立日期：{{ currentPoint.registerDate }}
+                </div>
+                <div class="info">
+                  组织机构代码：{{ currentPoint.companyCode }}
+                </div>
+                <div class="info">
+                  企业（机构）类型：{{ currentPoint.enterpriseType }}
+                </div>
+              </template>
+              <template v-else-if="currentPoint.type === 'device'">
+                <div class="title">客户：{{ currentPoint.customerName }}</div>
+                <div class="info">
+                  设备名称：{{ currentPoint.equipmentName }}
+                </div>
+                <div class="info">
+                  设备编号：{{ currentPoint.equipmentCode }}
+                </div>
+                <div
+                  class="info"
+                  :style="{
+                    color: getColor(currentPoint.equipmentState),
+                  }"
+                >
+                  设备状态：{{ currentPoint.equipmentState }}
+                </div>
+                <div class="info">传感器数量：{{ currentPoint.sensorNum }}</div>
+                <div class="info">所在车间：{{ currentPoint.workshop }}</div>
+              </template>
             </div>
           </bm-info-window>
         </baidu-map>
@@ -23,18 +62,20 @@
         <EnterpriseTree
           class="enterprise-tree"
           title="星级上云企业"
+          placeholder="请输入企业名称"
           :num="10"
           :parent-node-src="require('@/assets/bigScreen/enterpriseNode.png')"
           :tree-data="enterpriseTree"
-          @treeClick="treeClick"
+          @treeClick="(data) => treeClick(data, 'enterprise')"
         />
         <EnterpriseTree
           class="device-tree"
           title="上云设备"
+          placeholder="请输入设备名称"
           :num="10"
           :parent-node-src="require('@/assets/bigScreen/deviceNode.png')"
           :tree-data="deviceTree"
-          @treeClick="treeClick"
+          @treeClick="(data) => treeClick(data, 'device')"
         />
         <div class="frame star-trend">
           <Header title="企业星级上云趋势" />
@@ -113,7 +154,7 @@ export default {
       enterpriseTree: [],
       deviceTree: [],
       infoShow: false,
-      centerPoint: null,
+      currentPoint: {},
     };
   },
   async mounted() {
@@ -167,22 +208,51 @@ export default {
           size: 53,
           methods: {
             click: (e) => {
-              if (e.id) {
-                console.log(findEnterpriseById({ id: e.id }));
-              }
+              e.id && this.getInfo(e.id, e.type);
             },
           },
         };
         new mapv.baiduMapLayer(this.map, dataSet, options);
       }
     },
-    treeClick(node) {
-      this.centerPoint = this.center = {
+    async getInfo(id, type) {
+      let currentPoint = null;
+      if (type === "enterprise") {
+        currentPoint = (await findEnterpriseById({ id })).data;
+      } else if (type === "device") {
+        currentPoint = (await findEquipmentById({ id })).data;
+      }
+      this.$set(this, "currentPoint", { ...currentPoint, type });
+      this.infoShow = true;
+    },
+    treeClick(node, type) {
+      this.center = {
         lng: node.longitude,
         lat: node.latitude,
       };
-      this.infoShow = true;
       this.zoom = 15;
+      node.id && this.getInfo(node.id, type);
+    },
+    infoClose() {
+      this.infoShow = false;
+    },
+    getColor(state) {
+      let color = "";
+      switch (state) {
+        case "运行中":
+          color = "#67C23A";
+          break;
+        case "故障中":
+          color = "#F56C6C";
+          break;
+        case "待机中":
+          color = "#E6A23C";
+          break;
+        default:
+          color = "#909399";
+          break;
+      }
+      return color;
     },
   },
 };

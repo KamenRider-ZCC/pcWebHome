@@ -10,7 +10,7 @@
     </div>
     <div v-if="showTree" class="tree-box">
       <el-input
-        placeholder="请输入企业名称"
+        :placeholder="placeholder"
         suffix-icon="el-icon-search"
         v-model="enterpriseName"
       >
@@ -57,6 +57,10 @@ export default {
     num: {
       type: Number,
       default: 0,
+    },
+    placeholder: {
+      type: String,
+      default: "",
     },
     treeData: {
       type: Array,

@@ -1,12 +1,22 @@
 <template>
   <div class="carousel">
-    <swiper id="mySwiper" :options="swiperOption">
+    <swiper
+      v-if="slideList.length"
+      class="swiper-no-swiping"
+      ref="mySwiper"
+      id="mySwiper"
+      :options="swiperOption"
+    >
       <!--必须的组件-->
       <!--每页幻灯片使用swiper-slide标签-->
       <!--幻灯片组件生成的标签自带.swiper-slide的类名，但单类名选择器设置的部分css(如宽高)将被覆盖-->
-      <swiper-slide v-for="item in 4" :key="item" class="swiper_slide_item">
-        <img src="@/assets/images/MainTop.jpg" />
-        <div class="title">江苏无锡打造“永不落幕”物博会</div>
+      <swiper-slide
+        v-for="item in slideList"
+        :key="item.id"
+        class="swiper_slide_item"
+      >
+        <img :src="item.newsImage" />
+        <div class="title">{{ item.newsTitle }}</div>
       </swiper-slide>
       <!--分页器-->
       <div slot="pagination" class="swiper-pagination" />
@@ -15,9 +25,17 @@
 </template>
 
 <script>
+import { getRecentNews } from "@/api/bigScreen";
+
 export default {
   data() {
+    let _this = this;
     return {
+      page: 1,
+      size: 4,
+      totalElements: 0,
+      isLast: false,
+      slideList: [],
       //swiperOption：swiper配置项信息，需要绑定在swiper标签的 :option 属性中
       swiperOption: {
         //分页器配置项
@@ -26,15 +44,46 @@ export default {
           clickable: true, // 点击分页器跳切换到相应的幻灯片
           type: "progressbar",
         },
-
+        initialSlide: 0,
         //幻灯片播放配置项
-        loop: true, //是否循环播放
+        loop: false, //是否循环播放
         speed: 1000, // 发生页面切换动画时，动画的切换速度
         autoplay: {
           delay: 2000, // 幻灯片停留时间
         },
+        on: {
+          slideChange: function () {
+            if (this.activeIndex === _this.slideList.length - 1) {
+              if (_this.isLast) {
+                _this.page = 1;
+              } else {
+                _this.page++;
+              }
+              this.activeIndex = 0;
+              setTimeout(() => {
+                _this.getPage();
+              }, 2000);
+            }
+          },
+        },
       },
     };
+  },
+  mounted() {
+    this.getPage();
+  },
+  methods: {
+    async getPage() {
+      const res = (
+        await getRecentNews({
+          page: this.page,
+          size: this.size,
+        })
+      ).data;
+      this.slideList = res.content;
+      this.totalElements = res.totalElements;
+      this.isLast = res.last;
+    },
   },
 };
 </script>

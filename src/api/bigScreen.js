@@ -99,3 +99,19 @@ export const findEquipmentById = (params) =>
     method: 'get',
     params
   })
+
+// 获取报警详情信息（查看按钮）
+export const findByIdCustom = (params) =>
+  axios.request({
+    url: 'bigscreen/warnings/findByIdCustom',
+    method: 'get',
+    params
+  })
+
+// 获取最新资讯
+export const getRecentNews = (params) =>
+  axios.request({
+    url: 'errtyy/bigscreen/recentNews/page',
+    method: 'get',
+    params
+  })
