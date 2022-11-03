@@ -32,7 +32,7 @@ export default {
     let _this = this;
     return {
       page: 1,
-      size: 100,
+      size: 2,
       totalElements: 0,
       isLast: false,
       slideList: [],
@@ -53,12 +53,52 @@ export default {
         autoplay: {
           delay: 2000, // 幻灯片停留时间
         },
+        on: {
+          slideChange: function () {
+            _this.indexNum = this.realIndex;
+            if (_this.totalElements <= _this.size) return;
+            if (this.realIndex === _this.slideList.length - 1) {
+              if (_this.isLast) {
+                _this.page = 1;
+              } else {
+                _this.page++;
+              }
+              setTimeout(() => {
+                this.realIndex = 0;
+                // _this.getPage();
+              }, 2000);
+            }
+          },
+        },
       },
     };
   },
   mounted() {
     this.getPage();
   },
+  // watch: {
+  //   swiperOption: {
+  //     handler(val) {
+  //       console.log(val);
+  //     },
+  //     deep: true,
+  //   },
+  // },
+  // watch: {
+  //   indexNum(val) {
+  //     if (val === this.slideList.length - 1) {
+  //       if (this.isLast) {
+  //         this.page = 1;
+  //       } else {
+  //         this.page++;
+  //       }
+  //       setTimeout(() => {
+  //         this.getPage();
+  //         // this.$refs.mySwiper && this.$refs.mySwiper.$swiper.init();
+  //       }, 2000);
+  //     }
+  //   },
+  // },
   methods: {
     async getPage() {
       const res = (

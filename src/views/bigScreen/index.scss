@@ -110,6 +110,22 @@
       left: 467px;
       justify-content: space-between;
       width: 985px;
+      z-index: 1;
+    }
+    .switch-button {
+      position: absolute;
+      top: 600px;
+      right: 467px;
+      z-index: 2;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 400;
+      color: #fff;
+      padding: 10px 20px;
+      background: rgba(52, 204, 255, 0.7);
+      border-radius: 2px;
+      border: 1px solid #34ccff;
+      cursor: pointer;
     }
     .enterprise-tree {
       position: absolute;

@@ -111,7 +111,14 @@ export const findByIdCustom = (params) =>
 // 获取最新资讯
 export const getRecentNews = (params) =>
   axios.request({
-    url: 'errtyy/bigscreen/recentNews/page',
+    url: 'bigscreen/recentNews/page',
     method: 'get',
     params
+  })
+
+// 获取echarts地图
+export const getEnterpriseMap = () =>
+  axios.request({
+    url: 'bigscreen/enterprise/getEnterpriseMap',
+    method: 'get'
   })

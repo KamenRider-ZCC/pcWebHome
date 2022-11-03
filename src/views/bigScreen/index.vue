@@ -1,82 +1,90 @@
 <template>
-  <v-scale-screen width="1920" height="1080">
+  <v-scale-screen width="1920" height="1080" full-screen>
     <div class="container">
       <div class="header">
         <div class="title">大唐工业互联网DTiip</div>
         <div class="time">{{ time }}</div>
       </div>
       <div class="map-box">
-        <baidu-map class="map" :center="center" :zoom="zoom" @ready="handler">
-          <bm-info-window
-            :position="{
-              lng: currentPoint.longitude,
-              lat: currentPoint.latitude,
-            }"
-            :show="infoShow"
-            :closeOnClick="false"
-            @clickclose="infoClose"
-          >
-            <div class="inside-box">
-              <template v-if="currentPoint.type === 'enterprise'">
-                <div class="title">{{ currentPoint.enterpriseName }}</div>
-                <div class="info">经营状态：{{ currentPoint.manageState }}</div>
-                <div class="info">
-                  法定代表人：{{ currentPoint.representative }}
-                </div>
-                <div class="info">
-                  统一社会信用代码：{{ currentPoint.creditCode }}
-                </div>
-                <div class="info">
-                  成立日期：{{ currentPoint.registerDate }}
-                </div>
-                <div class="info">
-                  组织机构代码：{{ currentPoint.companyCode }}
-                </div>
-                <div class="info">
-                  企业（机构）类型：{{ currentPoint.enterpriseType }}
-                </div>
-              </template>
-              <template v-else-if="currentPoint.type === 'device'">
-                <div class="title">客户：{{ currentPoint.customerName }}</div>
-                <div class="info">
-                  设备名称：{{ currentPoint.equipmentName }}
-                </div>
-                <div class="info">
-                  设备编号：{{ currentPoint.equipmentCode }}
-                </div>
-                <div
-                  class="info"
-                  :style="{
-                    color: getColor(currentPoint.equipmentState),
-                  }"
-                >
-                  设备状态：{{ currentPoint.equipmentState }}
-                </div>
-                <div class="info">传感器数量：{{ currentPoint.sensorNum }}</div>
-                <div class="info">所在车间：{{ currentPoint.workshop }}</div>
-              </template>
-            </div>
-          </bm-info-window>
-        </baidu-map>
         <DataColumn class="data-column" />
-        <EnterpriseTree
-          class="enterprise-tree"
-          title="星级上云企业"
-          placeholder="请输入企业名称"
-          :num="10"
-          :parent-node-src="require('@/assets/bigScreen/enterpriseNode.png')"
-          :tree-data="enterpriseTree"
-          @treeClick="(data) => treeClick(data, 'enterprise')"
-        />
-        <EnterpriseTree
-          class="device-tree"
-          title="上云设备"
-          placeholder="请输入设备名称"
-          :num="10"
-          :parent-node-src="require('@/assets/bigScreen/deviceNode.png')"
-          :tree-data="deviceTree"
-          @treeClick="(data) => treeClick(data, 'device')"
-        />
+        <div class="switch-button" @click="mapShow = !mapShow">切换地图</div>
+        <template v-if="mapShow">
+          <baidu-map class="map" :center="center" :zoom="zoom" @ready="handler">
+            <bm-info-window
+              :position="{
+                lng: currentPoint.longitude,
+                lat: currentPoint.latitude,
+              }"
+              :show="infoShow"
+              :closeOnClick="false"
+              @clickclose="infoClose"
+            >
+              <div class="inside-box">
+                <template v-if="currentPoint.type === 'enterprise'">
+                  <div class="title">{{ currentPoint.enterpriseName }}</div>
+                  <div class="info">
+                    经营状态：{{ currentPoint.manageState }}
+                  </div>
+                  <div class="info">
+                    法定代表人：{{ currentPoint.representative }}
+                  </div>
+                  <div class="info">
+                    统一社会信用代码：{{ currentPoint.creditCode }}
+                  </div>
+                  <div class="info">
+                    成立日期：{{ currentPoint.registerDate }}
+                  </div>
+                  <div class="info">
+                    组织机构代码：{{ currentPoint.companyCode }}
+                  </div>
+                  <div class="info">
+                    企业（机构）类型：{{ currentPoint.enterpriseType }}
+                  </div>
+                </template>
+                <template v-else-if="currentPoint.type === 'device'">
+                  <div class="title">客户：{{ currentPoint.customerName }}</div>
+                  <div class="info">
+                    设备名称：{{ currentPoint.equipmentName }}
+                  </div>
+                  <div class="info">
+                    设备编号：{{ currentPoint.equipmentCode }}
+                  </div>
+                  <div
+                    class="info"
+                    :style="{
+                      color: getColor(currentPoint.equipmentState),
+                    }"
+                  >
+                    设备状态：{{ currentPoint.equipmentState }}
+                  </div>
+                  <div class="info">
+                    传感器数量：{{ currentPoint.sensorNum }}
+                  </div>
+                  <div class="info">所在车间：{{ currentPoint.workshop }}</div>
+                </template>
+              </div>
+            </bm-info-window>
+          </baidu-map>
+          <EnterpriseTree
+            class="enterprise-tree"
+            title="星级上云企业"
+            placeholder="请输入企业名称"
+            :num="10"
+            :parent-node-src="require('@/assets/bigScreen/enterpriseNode.png')"
+            :tree-data="enterpriseTree"
+            @treeClick="(data) => treeClick(data, 'enterprise')"
+          />
+          <EnterpriseTree
+            class="device-tree"
+            title="上云设备"
+            placeholder="请输入设备名称"
+            :num="10"
+            :parent-node-src="require('@/assets/bigScreen/deviceNode.png')"
+            :tree-data="deviceTree"
+            @treeClick="(data) => treeClick(data, 'device')"
+          />
+        </template>
+        <EchartsMap v-else />
         <div class="frame star-trend">
           <Header title="企业星级上云趋势" />
           <StarTrend />
@@ -121,6 +129,7 @@ import LatestStatus from "./components/LatestStatus.vue";
 import AlarmList from "./components/AlarmList.vue";
 import DataColumn from "./components/DataColumn.vue";
 import EnterpriseTree from "./components/EnterpriseTree.vue";
+import EchartsMap from "./components/EchartsMap.vue";
 import {
   findByEnterpriseName,
   findByEquipmentName,
@@ -144,9 +153,11 @@ export default {
     AlarmList,
     DataColumn,
     EnterpriseTree,
+    EchartsMap,
   },
   data() {
     return {
+      mapShow: false,
       center: { lng: 116.404, lat: 39.915 },
       zoom: 3,
       time: "",
