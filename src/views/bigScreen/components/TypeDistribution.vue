@@ -44,6 +44,17 @@ export default {
           color: "#D2E9FF",
           fontSize: 15,
         },
+        labelFormatter: function () {
+          let msg = `<a>`;
+          if (this.name.length > 4) {
+            msg += this.name.substring(0, 4);
+            msg += "...";
+          } else {
+            msg += this.name;
+          }
+          msg += "</a>";
+          return msg;
+        },
       },
       credits: {
         //版权

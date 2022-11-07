@@ -6,14 +6,24 @@ import Qs from 'qs'
 
 class AjaxRequest {
   constructor() {
-    if (process.env.NODE_ENV === 'production') this.baseURL = process.env.VUE_APP_BASE_API
+    // if (process.env.NODE_ENV === 'production') this.baseURL = process.env.VUE_APP_BASE_API
     // this.timeout = 5000
     this.withCredentials = true
   }
   setInterceptor(instance) {
     instance.interceptors.request.use(
       config => {
-        if (process.env.NODE_ENV === 'development' && !config.url.includes('bigscreen')) config.url = 'api/' + config.url
+        if (process.env.NODE_ENV === 'production') {
+          if (config.url.includes('bigscreen')) {
+            config.baseURL = process.env.VUE_APP_BIGSCREEN_API
+          } else {
+            config.baseURL = process.env.VUE_APP_BASE_API
+          }
+        } else {
+          if (!config.url.includes('bigscreen')) {
+            config.url = 'api/' + config.url
+          }
+        }
         // 每次请求前，将token 放到请求头中
         config.headers.token = getToken() || ''
         config.headers['Content-Type'] = 'application/x-www-form-urlencoded'

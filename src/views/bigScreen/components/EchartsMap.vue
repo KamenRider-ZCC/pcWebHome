@@ -24,6 +24,7 @@ export default {
         // 提示浮窗样式
         tooltip: {
           show: true,
+          padding: [10, 20],
           trigger: "item",
           alwaysShowContent: false,
           backgroundColor: "#0C121C",
@@ -33,9 +34,9 @@ export default {
           enterable: true,
           textStyle: {
             color: "#DADADA",
-            fontSize: "12",
-            width: 20,
-            height: 30,
+            fontSize: "18",
+            // width: 20,
+            // height: 30,
             overflow: "break",
           },
           showDelay: 100,

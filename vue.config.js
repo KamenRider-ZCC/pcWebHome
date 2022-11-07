@@ -52,7 +52,9 @@ module.exports = {
         }
       },
       '/bigscreen': {
-        target: 'http://libai258.gnway.cc/',
+        // target: 'http://libai258.gnway.cc/',//刘权
+        // target: 'http://u3i5x6.natappfree.cc',//吴习宇
+        target: 'http://datangiot.cn:10009/',
         changeOrigin: true,
         pathRewrite: {
           '^/bigscreen': '/bigscreen'

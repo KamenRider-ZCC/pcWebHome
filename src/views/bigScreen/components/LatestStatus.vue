@@ -1,7 +1,6 @@
 <template>
   <div class="carousel">
     <swiper
-      :key="page"
       v-if="slideList.length"
       ref="mySwiper"
       id="mySwiper"
@@ -15,7 +14,7 @@
         :key="item.id"
         class="swiper_slide_item"
       >
-        <img :src="item.newsImage" />
+        <img :src="item.newsImage" @click="goHref(item.newsLink)" />
         <div class="title">{{ item.newsTitle }}</div>
       </swiper-slide>
       <!--分页器-->
@@ -29,14 +28,12 @@ import { getRecentNews } from "@/api/bigScreen";
 
 export default {
   data() {
-    let _this = this;
     return {
       page: 1,
       size: 100,
       totalElements: 0,
       isLast: false,
       slideList: [],
-      indexNum: 0,
       //swiperOption：swiper配置项信息，需要绑定在swiper标签的 :option 属性中
       swiperOption: {
         //分页器配置项
@@ -61,15 +58,13 @@ export default {
   },
   methods: {
     async getPage() {
-      const res = (
-        await getRecentNews({
-          page: this.page,
-          size: this.size,
-        })
-      ).data;
+      const res = (await getRecentNews()).data;
       this.slideList = res.content;
       this.totalElements = res.totalElements;
       this.isLast = res.last;
+    },
+    goHref(url) {
+      url && window.open(url);
     },
   },
 };
@@ -88,6 +83,7 @@ export default {
       img {
         width: 396px;
         height: 221px;
+        cursor: pointer;
       }
       .title {
         margin-top: 2px;
